@@ -32,13 +32,8 @@ namespace Application.Features.Authentication.Commands
 
         public async Task<Result<LoginResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var users = await _repositoryManager.UserRepository.FindByConditionAsync(
-                u => u.Email == request.Request.Email,
-                false,
-                cancellationToken
-            );
+            var user = await _repositoryManager.UserRepository.GetUserByEmailAsync(request.Request.Email);
 
-            var user = users.FirstOrDefault();
             if (user == null)
             {
                 throw new NotFoundException("User not found", "NOT-FOUND");

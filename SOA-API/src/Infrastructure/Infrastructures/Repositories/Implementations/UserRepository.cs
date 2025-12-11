@@ -1,12 +1,21 @@
 ﻿using Domain.Identity;
 using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructures.Repositories.Implementations
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
+        private readonly ApplicationDbContext _context;
         public UserRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
+            _context = applicationDbContext;
+        }
+
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            return user;
         }
 
         //public async Task<(IEnumerable<User> Result, int TotalCount)> GetListWithCountAsync(GetListParameters parameters,

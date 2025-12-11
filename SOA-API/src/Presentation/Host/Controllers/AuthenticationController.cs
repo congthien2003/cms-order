@@ -28,6 +28,7 @@ namespace Host.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> LoginAsync([FromBody] LoginRequest request, CancellationToken cancellationToken)
         {
             var command = new LoginCommand(request);
@@ -36,6 +37,7 @@ namespace Host.Controllers
         }
 
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest request, CancellationToken cancellationToken)
         {
             var command = new RegisterCommand(request);
