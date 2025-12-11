@@ -8,14 +8,27 @@ import {
   HelpCircle,
   LogOut,
   BarChartIcon,
+  type LucideProps,
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSidebar } from './useSidebar';
 import { Button } from '@/components/ui/button';
+import { RoleKeys } from '@/constants/roles';
+import { TokenService } from '@/utils/tokenService';
+import { useState, useEffect } from 'react';
 
 export function Sidebar() {
   const { isOpen, toggle } = useSidebar();
   const pathname = useLocation();
+  const currentRoles = new TokenService().getCurrentRoles();
+  const [filteredNavItems, setFilteredNavItems] = useState<NavItem[]>([]);
+  useEffect(() => {
+    setFilteredNavItems(
+      navItems.filter((item) =>
+        item.roles?.some((role) => currentRoles.includes(role))
+      )
+    );
+  }, [currentRoles]);
 
   return (
     <>
@@ -49,7 +62,7 @@ export function Sidebar() {
         <div className="flex flex-col h-[calc(100vh-3.5rem)]">
           <div className="flex-1 overflow-auto py-2">
             <nav className="grid gap-1 px-2">
-              {navItems.map((item, index) => (
+              {filteredNavItems.map((item, index) => (
                 <Link
                   key={index}
                   to={item.href}
@@ -135,11 +148,25 @@ export function Sidebar() {
   );
 }
 
-const navItems = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Users', href: '/users', icon: Users },
-  { name: 'Roles', href: '/roles', icon: Wallet },
-  { name: 'Demo', href: '/demo', icon: BarChartIcon },
+type NavItem = {
+  name: string;
+  href: string;
+  icon: React.ForwardRefExoticComponent<
+    Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
+  >;
+  roles?: string[];
+};
+
+const navItems: NavItem[] = [
+  {
+    name: 'Dashboard',
+    href: '/dashboard',
+    icon: LayoutDashboard,
+    roles: [RoleKeys.Admin],
+  },
+  { name: 'Users', href: '/users', icon: Users, roles: [RoleKeys.Admin] },
+  { name: 'Roles', href: '/roles', icon: Wallet, roles: [RoleKeys.Admin] },
+  { name: 'Demo', href: '/demo', icon: BarChartIcon, roles: [RoleKeys.Admin] },
 
   // { name: "Transactions", href: "/transactions", icon: Wallet },
   // { name: "Analytics", href: "/analytics", icon: BarChart3 },
