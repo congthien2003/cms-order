@@ -20,31 +20,37 @@
         /// Gets the category repository instance.
         /// </summary>
         ICategoryRepository CategoryRepository { get; }
+        ICategoryRepository Category => CategoryRepository;
 
         /// <summary>
     /// Gets the product repository instance.
     /// </summary>
     IProductRepository ProductRepository { get; }
+        IProductRepository Product => ProductRepository;
 
     /// <summary>
     /// Gets the topping repository instance.
     /// </summary>
     IToppingRepository ToppingRepository { get; }
+        IToppingRepository Topping => ToppingRepository;
 
     /// <summary>
     /// Gets the voucher repository instance.
     /// </summary>
     IVoucherRepository VoucherRepository { get; }
+        IVoucherRepository Voucher => VoucherRepository;
 
     /// <summary>
     /// Gets the order repository instance.
     /// </summary>
     IOrderRepository OrderRepository { get; }
+        IOrderRepository Order => OrderRepository;
 
     /// <summary>
     /// Gets the shop setting repository instance.
     /// </summary>
     IShopSettingRepository ShopSettingRepository { get; }
+        IShopSettingRepository ShopSetting => ShopSettingRepository;
 
     /// <summary>
         /// </summary>

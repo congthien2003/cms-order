@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brand Guideline | Modern Tech Identity</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet" />
+    <style>
+      :root {
+        --electric-cyan: #2ac1db;
+        --royal-blue: #366ac1;
+        --midnight: #111827;
+        --arctic-white: #f8fafd;
+        --deep-ocean: #001f49;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--arctic-white);
+        color: var(--midnight);
+        line-height: 1.6;
+      }
+
+      header {
+        background-color: var(--midnight);
+        color: white;
+        padding: 60px 20px;
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 2.5rem;
+        letter-spacing: -1px;
+        margin-bottom: 10px;
+      }
+
+      header p {
+        opacity: 0.8;
+        font-weight: 300;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      section {
+        margin-bottom: 60px;
+      }
+
+      h2 {
+        border-left: 5px solid var(--electric-cyan);
+        padding-left: 15px;
+        margin-bottom: 30px;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* Color Grid */
+      .color-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 20px;
+      }
+
+      .color-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+      }
+
+      .color-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .swatch {
+        height: 120px;
+        width: 100%;
+      }
+
+      .color-info {
+        padding: 15px;
+        font-size: 0.9rem;
+      }
+
+      .color-info strong {
+        display: block;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+      }
+
+      .color-info code {
+        background: #eee;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+
+      /* Typography */
+      .typo-sample h1 {
+        font-size: 3rem;
+        color: var(--deep-ocean);
+      }
+      .typo-sample h2 {
+        border: none;
+        padding: 0;
+        font-size: 2rem;
+        color: var(--royal-blue);
+      }
+      .typo-sample p {
+        margin-bottom: 20px;
+        max-width: 600px;
+      }
+
+      /* UI Elements */
+      .ui-demo {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 12px 28px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background-color: var(--royal-blue);
+        color: white;
+      }
+      .btn-secondary {
+        background-color: var(--deep-ocean);
+        color: white;
+      }
+      .btn-accent {
+        background-color: var(--electric-cyan);
+        color: var(--midnight);
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      footer {
+        text-align: center;
+        padding: 40px;
+        font-size: 0.8rem;
+        color: #666;
+        border-top: 1px solid #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>BRAND IDENTITY KIT</h1>
+      <p>Hệ thống nhận diện thương hiệu công nghệ hiện đại</p>
+    </header>
+
+    <div class="container">
+      <section>
+        <h2>Bảng Màu Chính (Color Palette)</h2>
+        <div class="color-grid">
+          <div class="color-card">
+            <div
+              class="swatch"
+              style="background-color: var(--electric-cyan)"></div>
+            <div class="color-info">
+              <strong>Electric Cyan</strong>
+              <code>#2AC1DB</code>
+            </div>
+          </div>
+          <div class="color-card">
+            <div
+              class="swatch"
+              style="background-color: var(--royal-blue)"></div>
+            <div class="color-info">
+              <strong>Royal Blue</strong>
+              <code>#366AC1</code>
+            </div>
+          </div>
+          <div class="color-card">
+            <div
+              class="swatch"
+              style="background-color: var(--deep-ocean)"></div>
+            <div class="color-info">
+              <strong>Deep Ocean</strong>
+              <code>#001F49</code>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="swatch" style="background-color: var(--midnight)"></div>
+            <div class="color-info">
+              <strong>Midnight</strong>
+              <code>#111827</code>
+            </div>
+          </div>
+          <div class="color-card" style="border: 1px solid #eee">
+            <div
+              class="swatch"
+              style="background-color: var(--arctic-white)"></div>
+            <div class="color-info">
+              <strong>Arctic White</strong>
+              <code>#F8FAFD</code>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="typo-sample">
+        <h2>Kiểu Chữ (Typography)</h2>
+        <h1>Heading 1 - Inter Bold</h1>
+        <h2>Heading 2 - Inter SemiBold</h2>
+        <p>
+          Đây là mẫu văn bản (Body text). Thương hiệu sử dụng font
+          <strong>Inter</strong> để mang lại cảm giác tối giản, dễ đọc và tối ưu
+          hóa cho các trải nghiệm kỹ thuật số. Font chữ này hỗ trợ tốt cho cả
+          nội dung tiếng Việt và các ký tự đặc biệt.
+        </p>
+      </section>
+
+      <section>
+        <h2>Thành Phần Giao Diện (UI Elements)</h2>
+        <div class="ui-demo">
+          <button class="btn btn-primary">Primary Button</button>
+          <button class="btn btn-secondary">Secondary Action</button>
+          <button class="btn btn-accent">Call to Action</button>
+        </div>
+        <p
+          style="
+            margin-top: 20px;
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #555;
+          ">
+          * Sử dụng màu <strong>Electric Cyan</strong> cho các nút bấm quan
+          trọng nhất để thu hút sự chú ý.
+        </p>
+      </section>
+    </div>
+
+    <footer>
+      &copy; 2024 Brand Guideline System. Created for Tech Excellence.
+    </footer>
+  </body>
+</html>
