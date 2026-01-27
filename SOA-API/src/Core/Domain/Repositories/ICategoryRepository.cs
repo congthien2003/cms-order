@@ -7,7 +7,7 @@ namespace Domain.Repositories
     /// Defines contracts for data access operations specific to Category.
     /// Follows Repository Pattern and DDD principles.
     /// </summary>
-    public interface ICategoryRepository : IRepository<Category>
+    public interface ICategoryRepository : IRepositoryBase<Category>
     {
         /// <summary>
         /// Gets a category by its name.

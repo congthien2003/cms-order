@@ -2,7 +2,7 @@
 
 namespace Domain.Repositories
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository : IRepositoryBase<User>
     {
         public Task<User?> GetUserByEmailAsync(string email);
     }

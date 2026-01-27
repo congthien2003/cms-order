@@ -11,6 +11,11 @@ namespace Domain.Repositories
         Task AddAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
+        
+        // Async versions for backward compatibility
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
+        
         Task<T?> GetByIdAsync(Guid id, bool trackChanges, CancellationToken cancellationToken = default);
         Task<IReadOnlyList<T>> GetAllAsync(bool trackChanges, CancellationToken cancellationToken = default);
         Task<IReadOnlyList<T>> FindByConditionAsync(

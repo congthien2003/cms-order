@@ -1,5 +1,5 @@
 using Domain.Entities;
-using Domain.Enums;
+using Domain.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -82,7 +82,7 @@ namespace Infrastructures.EntityConfigurations
                 .IsUnique();
             builder.HasIndex(e => e.Status);
             builder.HasIndex(e => e.PaymentStatus);
-            builder.HasIndex(e => e.CreatedDate);
+            builder.HasIndex(e => e.CreatedAt);
             builder.HasIndex(e => e.CustomerPhone);
 
             // Relationships
