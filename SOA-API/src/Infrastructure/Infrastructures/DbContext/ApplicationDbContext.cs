@@ -41,35 +41,8 @@ namespace Infrastructures
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure Category entity
-            modelBuilder.Entity<Category>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Description)
-                    .HasMaxLength(500);
-
-                entity.Property(e => e.DisplayOrder)
-                    .HasDefaultValue(0);
-
-                entity.Property(e => e.IsDeleted)
-                    .HasDefaultValue(false);
-
-                // Global query filter for soft delete
-                entity.HasQueryFilter(e => !e.IsDeleted);
-
-                // Index for name searches
-                entity.HasIndex(e => e.Name)
-                    .IsUnique(false)
-                    .HasFilter("[IsDeleted] = 0");
-
-                // Index for display order sorting
-                entity.HasIndex(e => e.DisplayOrder);
-            });
+            // Apply all entity configurations from assembly
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
             // Many-to-many config for User-Role relationship
             modelBuilder.Entity<User>()
@@ -104,6 +77,51 @@ namespace Infrastructures
         /// Gets or sets the Categories database set.
         /// </summary>
         public DbSet<Category> Category { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Products database set.
+        /// </summary>
+        public DbSet<Product> Products { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ProductSizes database set.
+        /// </summary>
+        public DbSet<ProductSize> ProductSizes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Toppings database set.
+        /// </summary>
+        public DbSet<Topping> Toppings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ProductToppings database set.
+        /// </summary>
+        public DbSet<ProductTopping> ProductToppings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Vouchers database set.
+        /// </summary>
+        public DbSet<Voucher> Vouchers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Orders database set.
+        /// </summary>
+        public DbSet<Order> Orders { get; set; }
+
+        /// <summary>
+        /// Gets or sets the OrderItems database set.
+        /// </summary>
+        public DbSet<OrderItem> OrderItems { get; set; }
+
+        /// <summary>
+        /// Gets or sets the OrderItemToppings database set.
+        /// </summary>
+        public DbSet<OrderItemTopping> OrderItemToppings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ShopSettings database set.
+        /// </summary>
+        public DbSet<ShopSetting> ShopSettings { get; set; }
 
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
