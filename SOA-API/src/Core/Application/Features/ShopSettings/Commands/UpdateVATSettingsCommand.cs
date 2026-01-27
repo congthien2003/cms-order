@@ -1,7 +1,7 @@
 using Application.Exceptions;
 using Application.Features.ShopSettings.Models;
 using Application.Models.Common;
-using AutoMapper;
+using MapsterMapper;
 using Domain.Repositories;
 using MediatR;
 

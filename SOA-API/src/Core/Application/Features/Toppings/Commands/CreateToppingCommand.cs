@@ -1,4 +1,4 @@
-using AutoMapper;
+using MapsterMapper;
 using MediatR;
 using Application.Features.Toppings.Models;
 using Application.Models.Common;
