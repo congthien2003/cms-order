@@ -20,7 +20,7 @@ namespace Application.Services.Implementations.Authentication
 
         public CurrentUser CurrentUser => new CurrentUser
         {
-            Id = Guid.Parse(_httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value.ToString() ?? string.Empty),
+            Id = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value.ToString() is string idString && Guid.TryParse(idString, out var id) ? id : Guid.Empty,
             Username = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? string.Empty,
             Role = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty,
             Permissions = _httpContextAccessor.HttpContext?.User?.FindFirst("Permissions")?.Value ?? string.Empty,

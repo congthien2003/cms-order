@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Domain.Identity;
 using Application.Services.Interfaces.Authentication;
+using Infrastructures.Converters;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructures
@@ -43,6 +44,22 @@ namespace Infrastructures
 
             // Apply all entity configurations from assembly
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
+            // Configure DateTime to always use UTC for PostgreSQL
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var property in entityType.GetProperties())
+                {
+                    if (property.ClrType == typeof(DateTime))
+                    {
+                        property.SetValueConverter(new DateTimeToUtcConverter());
+                    }
+                    else if (property.ClrType == typeof(DateTime?))
+                    {
+                        property.SetValueConverter(new NullableDateTimeToUtcConverter());
+                    }
+                }
+            }
 
             // Many-to-many config for User-Role relationship
             modelBuilder.Entity<User>()

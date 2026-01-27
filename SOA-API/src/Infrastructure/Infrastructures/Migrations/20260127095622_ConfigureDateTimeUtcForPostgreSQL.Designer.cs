@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructures.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260127084548_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20260127095622_ConfigureDateTimeUtcForPostgreSQL")]
+    partial class ConfigureDateTimeUtcForPostgreSQL
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
