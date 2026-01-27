@@ -1,6 +1,7 @@
 using Application;
 using Host.Extensions;
 using Infrastructures;
+using Infrastructures.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Host;
@@ -45,6 +46,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseCors("CorsPolicy");
+
+// Initialize database with seed data
+await app.InitializeDatabaseAsync();
 
 try
 {
