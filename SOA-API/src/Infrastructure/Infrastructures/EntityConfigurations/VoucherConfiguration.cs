@@ -33,8 +33,7 @@ namespace Infrastructures.EntityConfigurations
                 .IsRequired();
 
             builder.Property(e => e.MinOrderAmount)
-                .HasColumnType("decimal(18,2)")
-                .HasDefaultValue(0);
+                .HasColumnType("decimal(18,2)");
 
             builder.Property(e => e.MaxDiscountAmount)
                 .HasColumnType("decimal(18,2)");
