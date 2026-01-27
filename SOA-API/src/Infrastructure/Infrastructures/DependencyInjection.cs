@@ -20,7 +20,7 @@ namespace Infrastructures
         {
             services.AddDbContext<ApplicationDbContext>(opts =>
             {
-                opts.UseSqlServer(config.GetConnectionString("sqlConnection"));
+                opts.UseNpgsql(config.GetConnectionString("sqlConnection"));
                 opts.UseLoggerFactory(LoggerFactory.Create(builder => { }))
                        .EnableSensitiveDataLogging(false)
                        .EnableDetailedErrors(true);

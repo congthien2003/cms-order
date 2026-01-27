@@ -22,12 +22,31 @@
         ICategoryRepository CategoryRepository { get; }
 
         /// <summary>
-        /// Disposes the repository manager and releases resources.
-        /// </summary>
-        Task DisposeAsync();
+    /// Gets the product repository instance.
+    /// </summary>
+    IProductRepository ProductRepository { get; }
 
-        /// <summary>
-        /// Saves all changes made in the repositories to the database.
+    /// <summary>
+    /// Gets the topping repository instance.
+    /// </summary>
+    IToppingRepository ToppingRepository { get; }
+
+    /// <summary>
+    /// Gets the voucher repository instance.
+    /// </summary>
+    IVoucherRepository VoucherRepository { get; }
+
+    /// <summary>
+    /// Gets the order repository instance.
+    /// </summary>
+    IOrderRepository OrderRepository { get; }
+
+    /// <summary>
+    /// Gets the shop setting repository instance.
+    /// </summary>
+    IShopSettingRepository ShopSettingRepository { get; }
+
+    /// <summary>
         /// </summary>
         /// <param name="cancellationToken">Cancellation token for the operation</param>
         Task SaveAsync(CancellationToken cancellationToken = default);
