@@ -20,17 +20,17 @@
 
 ## 🎯 Tổng quan các Phase
 
-| Phase   | Nội dung                          | Ưu tiên       | Trạng thái      |
-| ------- | --------------------------------- | ------------- | --------------- |
-| Phase 1 | Database Design & Domain Setup    | 🔴 Cao        | ✅ Hoàn thành |
-| Phase 2 | Backend API - Core Entities       | 🔴 Cao        | ✅ Hoàn thành |
+| Phase   | Nội dung                          | Ưu tiên       | Trạng thái        |
+| ------- | --------------------------------- | ------------- | ----------------- |
+| Phase 1 | Database Design & Domain Setup    | 🔴 Cao        | ✅ Hoàn thành     |
+| Phase 2 | Backend API - Core Entities       | 🔴 Cao        | ✅ Hoàn thành     |
 | Phase 3 | Backend API - Order & Promotion   | 🔴 Cao        | 🔄 Đang thực hiện |
-| Phase 4 | Backend API - Dashboard & Reports | 🟡 Trung bình | ⬜ Chưa bắt đầu |
-| Phase 5 | Backend API - Real-time (SignalR) | 🟡 Trung bình | ⬜ Chưa bắt đầu |
-| Phase 6 | Admin UI - Setup & Auth           | 🔴 Cao        | ⬜ Chưa bắt đầu |
-| Phase 7 | Admin UI - Entity Management      | 🔴 Cao        | ⬜ Chưa bắt đầu |
-| Phase 8 | Admin UI - Order & Dashboard      | 🟡 Trung bình | ⬜ Chưa bắt đầu |
-| Phase 9 | Mobile App (React Native)         | 🟢 Phase sau  | ⬜ Chưa bắt đầu |
+| Phase 4 | Backend API - Dashboard & Reports | 🟡 Trung bình | ⬜ Chưa bắt đầu   |
+| Phase 5 | Backend API - Real-time (SignalR) | 🟡 Trung bình | ⬜ Chưa bắt đầu   |
+| Phase 6 | Admin UI - Setup & Auth           | 🔴 Cao        | ⬜ Chưa bắt đầu   |
+| Phase 7 | Admin UI - Entity Management      | 🔴 Cao        | ⬜ Chưa bắt đầu   |
+| Phase 8 | Admin UI - Order & Dashboard      | 🟡 Trung bình | ⬜ Chưa bắt đầu   |
+| Phase 9 | Mobile App (React Native)         | 🟢 Phase sau  | ⬜ Chưa bắt đầu   |
 
 ---
 
@@ -281,40 +281,40 @@
 
 ### 3.2 Order Management
 
-- [ ] **TODO-3.2.1:** Tạo DTOs cho Order:
+- [x] **TODO-3.2.1:** Tạo DTOs cho Order: ✅
   - `CreateOrderRequest`
   - `OrderItemRequest`
   - `OrderResponse`
   - `OrderDetailResponse`
-- [ ] **TODO-3.2.2:** Tạo OrderService interface và implementation
-- [ ] **TODO-3.2.3:** Tạo OrderRepository implementation
-- [ ] **TODO-3.2.4:** Implement logic tính toán đơn hàng:
+- [x] **TODO-3.2.2:** Tạo OrderService interface và implementation (dùng CQRS pattern) ✅
+- [x] **TODO-3.2.3:** Tạo OrderRepository implementation ✅
+- [x] **TODO-3.2.4:** Implement logic tính toán đơn hàng: ✅
   - Tính SubTotal
   - Apply Voucher discount
   - Tính VAT (nếu có)
   - Tính TotalAmount
-- [ ] **TODO-3.2.5:** Tạo OrderController với các endpoints:
+- [x] **TODO-3.2.5:** Tạo OrderController với các endpoints: ✅
   - `GET /api/orders` - Lấy danh sách (có phân trang, filter theo status, date range)
   - `GET /api/orders/{id}` - Lấy chi tiết đơn
   - `GET /api/orders/by-number/{orderNumber}` - Lấy theo mã đơn
   - `POST /api/orders` - Tạo đơn mới
   - `PATCH /api/orders/{id}/status` - Cập nhật trạng thái đơn
   - `PATCH /api/orders/{id}/payment-status` - Cập nhật trạng thái thanh toán
-  - `DELETE /api/orders/{id}` - Hủy đơn (chỉ khi Pending)
-- [ ] **TODO-3.2.6:** Tạo logic generate OrderNumber (VD: ORD-20260127-001)
+  - `POST /api/orders/{id}/cancel` - Hủy đơn
+- [x] **TODO-3.2.6:** Tạo logic generate OrderNumber (VD: ORD-20260127-001) ✅
 
 ### 3.3 Order Queue (cho Admin)
 
-- [ ] **TODO-3.3.1:** Tạo endpoint lấy orders theo queue:
-  - `GET /api/orders/queue` - Lấy đơn đang chờ xử lý (status: Pending, Confirmed, Preparing)
+- [x] **TODO-3.3.1:** Tạo endpoint lấy orders theo queue: ✅
+  - `GET /api/orders/queue` - Lấy đơn đang chờ xử lý (status: Pending, Confirmed, Preparing, Ready)
   - `GET /api/orders/today` - Lấy đơn trong ngày
-- [ ] **TODO-3.3.2:** Implement filter và sorting cho queue
+- [x] **TODO-3.3.2:** Implement filter và sorting cho queue ✅
 
 ### 3.4 Receipt/Invoice
 
-- [ ] **TODO-3.4.1:** Tạo endpoint generate receipt:
+- [x] **TODO-3.4.1:** Tạo endpoint generate receipt: ✅
   - `GET /api/orders/{id}/receipt` - Lấy thông tin hóa đơn để in
-- [ ] **TODO-3.4.2:** Tạo ReceiptDTO với đầy đủ thông tin
+- [x] **TODO-3.4.2:** Tạo ReceiptDTO với đầy đủ thông tin ✅
 
 ---
 
