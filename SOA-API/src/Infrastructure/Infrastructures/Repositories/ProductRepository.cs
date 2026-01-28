@@ -34,6 +34,7 @@ namespace Infrastructures.Repositories
             CancellationToken cancellationToken = default)
         {
             var query = _context.Set<Product>()
+                .Include(p => p.Category)
                 .Where(p => p.CategoryId == categoryId)
                 .AsQueryable();
 
@@ -63,7 +64,9 @@ namespace Infrastructures.Repositories
             bool trackChanges,
             CancellationToken cancellationToken = default)
         {
-            var query = _context.Set<Product>().AsQueryable();
+            var query = _context.Set<Product>()
+                .Include(p => p.Category)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
                 query = query.Where(p => p.Name.Contains(searchTerm) || p.Description.Contains(searchTerm));

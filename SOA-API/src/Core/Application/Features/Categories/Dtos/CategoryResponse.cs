@@ -14,12 +14,22 @@ namespace Application.Features.Categories.Dtos
         /// <summary>
         /// Gets or sets the category name.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the category description.
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of the category image.
+        /// </summary>
+        public string? ImageUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the category is active.
+        /// </summary>
+        public bool IsActive { get; set; }
 
         /// <summary>
         /// Gets or sets the display order for UI sorting.
@@ -29,12 +39,12 @@ namespace Application.Features.Categories.Dtos
         /// <summary>
         /// Gets or sets the creation timestamp.
         /// </summary>
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the last update timestamp.
         /// </summary>
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }
 

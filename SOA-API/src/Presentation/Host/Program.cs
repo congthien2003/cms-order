@@ -14,7 +14,6 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddIntegrations();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApi();
 builder.Services.EssentialConfig(builder.Configuration);
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Host.UseSerilog();

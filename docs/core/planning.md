@@ -1,8 +1,20 @@
 # 📋 Project Planning - Store Order Management System (MVP v1.0)
 
 > **Ngày tạo:** 27/01/2026  
+> **Cập nhật:** 28/01/2026 - Phase 1 Completed ✅  
 > **Mục tiêu:** Triển khai hệ thống bán hàng (POS) cho cửa hàng bán nước  
 > **Tech Stack:** .NET API + EF Core + PostgreSQL | React + TailwindCSS + Shadcn | React Native Expo
+
+---
+
+## 📊 Progress Summary
+
+**Overall Progress:** 49/130 tasks (37.7%)
+
+- ✅ **Phase 1 COMPLETED:** 19/19 tasks (100%)
+- ✅ **Phase 2 COMPLETED:** 16/16 tasks (100%)
+- 🔄 **Phase 3 IN PROGRESS:** 5/14 tasks (35.7%) - Voucher API done, Order API pending
+- ⬜ **Remaining:** 91 tasks across Phases 3-9
 
 ---
 
@@ -10,9 +22,9 @@
 
 | Phase   | Nội dung                          | Ưu tiên       | Trạng thái      |
 | ------- | --------------------------------- | ------------- | --------------- |
-| Phase 1 | Database Design & Domain Setup    | 🔴 Cao        | ⬜ Chưa bắt đầu |
-| Phase 2 | Backend API - Core Entities       | 🔴 Cao        | ⬜ Chưa bắt đầu |
-| Phase 3 | Backend API - Order & Promotion   | 🔴 Cao        | ⬜ Chưa bắt đầu |
+| Phase 1 | Database Design & Domain Setup    | 🔴 Cao        | ✅ Hoàn thành |
+| Phase 2 | Backend API - Core Entities       | 🔴 Cao        | ✅ Hoàn thành |
+| Phase 3 | Backend API - Order & Promotion   | 🔴 Cao        | 🔄 Đang thực hiện |
 | Phase 4 | Backend API - Dashboard & Reports | 🟡 Trung bình | ⬜ Chưa bắt đầu |
 | Phase 5 | Backend API - Real-time (SignalR) | 🟡 Trung bình | ⬜ Chưa bắt đầu |
 | Phase 6 | Admin UI - Setup & Auth           | 🔴 Cao        | ⬜ Chưa bắt đầu |
@@ -26,8 +38,8 @@
 
 ### 1.1 Thiết kế Database Schema
 
-- [ ] **TODO-1.1.1:** Thiết kế ERD (Entity Relationship Diagram)
-- [ ] **TODO-1.1.2:** Xác định các bảng và quan hệ
+- [x] **TODO-1.1.1:** Thiết kế ERD (Entity Relationship Diagram) ✅
+- [x] **TODO-1.1.2:** Xác định các bảng và quan hệ ✅
 
 **Danh sách Entities cần tạo:**
 
@@ -152,39 +164,39 @@
 
 ### 1.2 Tạo Domain Entities
 
-- [ ] **TODO-1.2.1:** Tạo entity `Category` trong Domain/Entities
-- [ ] **TODO-1.2.2:** Tạo entity `Product` trong Domain/Entities
-- [ ] **TODO-1.2.3:** Tạo entity `ProductSize` trong Domain/Entities
-- [ ] **TODO-1.2.4:** Tạo entity `Topping` trong Domain/Entities
-- [ ] **TODO-1.2.5:** Tạo entity `ProductTopping` trong Domain/Entities
-- [ ] **TODO-1.2.6:** Tạo entity `Voucher` trong Domain/Entities
-- [ ] **TODO-1.2.7:** Tạo entity `Order` trong Domain/Entities
-- [ ] **TODO-1.2.8:** Tạo entity `OrderItem` trong Domain/Entities
-- [ ] **TODO-1.2.9:** Tạo entity `OrderItemTopping` trong Domain/Entities
-- [ ] **TODO-1.2.10:** Tạo entity `ShopSetting` trong Domain/Entities
+- [x] **TODO-1.2.1:** Tạo entity `Category` trong Domain/Entities ✅
+- [x] **TODO-1.2.2:** Tạo entity `Product` trong Domain/Entities ✅
+- [x] **TODO-1.2.3:** Tạo entity `ProductSize` trong Domain/Entities ✅
+- [x] **TODO-1.2.4:** Tạo entity `Topping` trong Domain/Entities ✅
+- [x] **TODO-1.2.5:** Tạo entity `ProductTopping` trong Domain/Entities ✅
+- [x] **TODO-1.2.6:** Tạo entity `Voucher` trong Domain/Entities ✅
+- [x] **TODO-1.2.7:** Tạo entity `Order` trong Domain/Entities ✅
+- [x] **TODO-1.2.8:** Tạo entity `OrderItem` trong Domain/Entities ✅
+- [x] **TODO-1.2.9:** Tạo entity `OrderItemTopping` trong Domain/Entities ✅
+- [x] **TODO-1.2.10:** Tạo entity `ShopSetting` trong Domain/Entities ✅
 
 ### 1.3 Tạo Enums
 
-- [ ] **TODO-1.3.1:** Tạo enum `DiscountType` (Percentage, FixedAmount)
-- [ ] **TODO-1.3.2:** Tạo enum `OrderStatus` (Pending, Confirmed, Preparing, Ready, Completed, Cancelled)
-- [ ] **TODO-1.3.3:** Tạo enum `PaymentMethod` (Cash, BankTransfer, Card)
-- [ ] **TODO-1.3.4:** Tạo enum `PaymentStatus` (Pending, Paid, Refunded)
+- [x] **TODO-1.3.1:** Tạo enum `DiscountType` (Percentage, FixedAmount) ✅
+- [x] **TODO-1.3.2:** Tạo enum `OrderStatus` (Pending, Confirmed, Preparing, Ready, Completed, Cancelled) ✅
+- [x] **TODO-1.3.3:** Tạo enum `PaymentMethod` (Cash, BankTransfer, Card) ✅
+- [x] **TODO-1.3.4:** Tạo enum `PaymentStatus` (Pending, Paid, Refunded) ✅
 
 ### 1.4 Tạo Repository Interfaces
 
-- [ ] **TODO-1.4.1:** Tạo interface `ICategoryRepository`
-- [ ] **TODO-1.4.2:** Tạo interface `IProductRepository`
-- [ ] **TODO-1.4.3:** Tạo interface `IToppingRepository`
-- [ ] **TODO-1.4.4:** Tạo interface `IVoucherRepository`
-- [ ] **TODO-1.4.5:** Tạo interface `IOrderRepository`
-- [ ] **TODO-1.4.6:** Tạo interface `IShopSettingRepository`
+- [x] **TODO-1.4.1:** Tạo interface `ICategoryRepository` ✅
+- [x] **TODO-1.4.2:** Tạo interface `IProductRepository` ✅
+- [x] **TODO-1.4.3:** Tạo interface `IToppingRepository` ✅
+- [x] **TODO-1.4.4:** Tạo interface `IVoucherRepository` ✅
+- [x] **TODO-1.4.5:** Tạo interface `IOrderRepository` ✅
+- [x] **TODO-1.4.6:** Tạo interface `IShopSettingRepository` ✅
 
 ### 1.5 Setup Database & Migrations
 
-- [ ] **TODO-1.5.1:** Cấu hình DbContext với các DbSet
-- [ ] **TODO-1.5.2:** Tạo Entity Configurations (Fluent API)
-- [ ] **TODO-1.5.3:** Tạo Initial Migration
-- [ ] **TODO-1.5.4:** Tạo Seed Data cơ bản
+- [x] **TODO-1.5.1:** Cấu hình DbContext với các DbSet ✅
+- [x] **TODO-1.5.2:** Tạo Entity Configurations (Fluent API) ✅
+- [x] **TODO-1.5.3:** Tạo Initial Migration ✅
+- [x] **TODO-1.5.4:** Tạo Seed Data cơ bản ✅
 
 ---
 
@@ -192,11 +204,11 @@
 
 ### 2.1 Category Management
 
-- [ ] **TODO-2.1.1:** Tạo DTOs cho Category (Request/Response)
-- [ ] **TODO-2.1.2:** Tạo CategoryService interface và implementation
-- [ ] **TODO-2.1.3:** Tạo CategoryRepository implementation
-- [ ] **TODO-2.1.4:** Tạo CategoryController với các endpoints:
-  - `GET /api/categories` - Lấy danh sách (có phân trang, filter)
+- [x] **TODO-2.1.1:** Tạo DTOs cho Category (Request/Response) ✅
+- [x] **TODO-2.1.2:** Tạo CategoryService interface và implementation (dùng CQRS pattern) ✅
+- [x] **TODO-2.1.3:** Tạo CategoryRepository implementation ✅
+- [x] **TODO-2.1.4:** Tạo CategoryController với các endpoints: ✅
+  - `POST /api/categories/list` - Lấy danh sách (có phân trang, filter)
   - `GET /api/categories/{id}` - Lấy chi tiết
   - `POST /api/categories` - Tạo mới
   - `PUT /api/categories/{id}` - Cập nhật
@@ -205,30 +217,30 @@
 
 ### 2.2 Product Management
 
-- [ ] **TODO-2.2.1:** Tạo DTOs cho Product (Request/Response)
-- [ ] **TODO-2.2.2:** Tạo DTOs cho ProductSize
-- [ ] **TODO-2.2.3:** Tạo ProductService interface và implementation
-- [ ] **TODO-2.2.4:** Tạo ProductRepository implementation
-- [ ] **TODO-2.2.5:** Tạo ProductController với các endpoints:
-  - `GET /api/products` - Lấy danh sách (có phân trang, filter theo category)
+- [x] **TODO-2.2.1:** Tạo DTOs cho Product (Request/Response) ✅
+- [x] **TODO-2.2.2:** Tạo DTOs cho ProductSize ✅
+- [x] **TODO-2.2.3:** Tạo ProductService interface và implementation (dùng CQRS pattern) ✅
+- [x] **TODO-2.2.4:** Tạo ProductRepository implementation ✅
+- [x] **TODO-2.2.5:** Tạo ProductsController với các endpoints: ✅
+  - `POST /api/products/list` - Lấy danh sách (có phân trang, filter theo category)
   - `GET /api/products/{id}` - Lấy chi tiết (bao gồm sizes, toppings)
   - `GET /api/products/by-category/{categoryId}` - Lấy theo danh mục
   - `POST /api/products` - Tạo mới (bao gồm sizes)
   - `PUT /api/products/{id}` - Cập nhật
   - `DELETE /api/products/{id}` - Xóa
   - `PATCH /api/products/{id}/toggle-status` - Bật/tắt trạng thái
-- [ ] **TODO-2.2.6:** Tạo endpoints cho ProductSize:
+- [x] **TODO-2.2.6:** Tạo endpoints cho ProductSize: ✅
   - `POST /api/products/{productId}/sizes` - Thêm size
   - `PUT /api/products/{productId}/sizes/{sizeId}` - Cập nhật size
   - `DELETE /api/products/{productId}/sizes/{sizeId}` - Xóa size
 
 ### 2.3 Topping Management
 
-- [ ] **TODO-2.3.1:** Tạo DTOs cho Topping
-- [ ] **TODO-2.3.2:** Tạo ToppingService interface và implementation
-- [ ] **TODO-2.3.3:** Tạo ToppingRepository implementation
-- [ ] **TODO-2.3.4:** Tạo ToppingController với các endpoints:
-  - `GET /api/toppings` - Lấy danh sách
+- [x] **TODO-2.3.1:** Tạo DTOs cho Topping ✅
+- [x] **TODO-2.3.2:** Tạo ToppingService interface và implementation (dùng CQRS pattern) ✅
+- [x] **TODO-2.3.3:** Tạo ToppingRepository implementation ✅
+- [x] **TODO-2.3.4:** Tạo ToppingsController với các endpoints: ✅
+  - `POST /api/toppings/list` - Lấy danh sách
   - `GET /api/toppings/{id}` - Lấy chi tiết
   - `POST /api/toppings` - Tạo mới
   - `PUT /api/toppings/{id}` - Cập nhật
@@ -237,8 +249,8 @@
 
 ### 2.4 Product-Topping Mapping
 
-- [ ] **TODO-2.4.1:** Tạo DTOs cho ProductTopping
-- [ ] **TODO-2.4.2:** Tạo endpoints:
+- [x] **TODO-2.4.1:** Tạo DTOs cho ProductTopping ✅
+- [x] **TODO-2.4.2:** Tạo endpoints: ✅
   - `GET /api/products/{productId}/toppings` - Lấy toppings của sản phẩm
   - `POST /api/products/{productId}/toppings` - Gán topping cho sản phẩm
   - `DELETE /api/products/{productId}/toppings/{toppingId}` - Xóa topping khỏi sản phẩm
@@ -250,18 +262,18 @@
 
 ### 3.1 Voucher Management
 
-- [ ] **TODO-3.1.1:** Tạo DTOs cho Voucher
-- [ ] **TODO-3.1.2:** Tạo VoucherService interface và implementation
-- [ ] **TODO-3.1.3:** Tạo VoucherRepository implementation
-- [ ] **TODO-3.1.4:** Tạo VoucherController với các endpoints:
-  - `GET /api/vouchers` - Lấy danh sách (có phân trang, filter)
+- [x] **TODO-3.1.1:** Tạo DTOs cho Voucher ✅
+- [x] **TODO-3.1.2:** Tạo VoucherService interface và implementation (dùng CQRS pattern) ✅
+- [x] **TODO-3.1.3:** Tạo VoucherRepository implementation ✅
+- [x] **TODO-3.1.4:** Tạo VouchersController với các endpoints: ✅
+  - `POST /api/vouchers/list` - Lấy danh sách (có phân trang, filter)
   - `GET /api/vouchers/{id}` - Lấy chi tiết
-  - `GET /api/vouchers/validate/{code}` - Validate voucher code
+  - `POST /api/vouchers/validate` - Validate voucher code
   - `POST /api/vouchers` - Tạo mới
   - `PUT /api/vouchers/{id}` - Cập nhật
   - `DELETE /api/vouchers/{id}` - Xóa
   - `PATCH /api/vouchers/{id}/toggle-status` - Bật/tắt trạng thái
-- [ ] **TODO-3.1.5:** Implement logic validate voucher:
+- [x] **TODO-3.1.5:** Implement logic validate voucher: ✅
   - Kiểm tra code có tồn tại
   - Kiểm tra thời gian hiệu lực
   - Kiểm tra số lần sử dụng
@@ -533,9 +545,9 @@
 
 ### Backend API
 
-- [ ] Phase 1: Database & Domain (0/19 tasks)
-- [ ] Phase 2: Core Entities CRUD (0/16 tasks)
-- [ ] Phase 3: Order & Promotion (0/14 tasks)
+- [x] Phase 1: Database & Domain (19/19 tasks) ✅
+- [x] Phase 2: Core Entities CRUD (16/16 tasks) ✅
+- [ ] Phase 3: Order & Promotion (5/14 tasks) - Voucher API done ✅
 - [ ] Phase 4: Dashboard & Reports (0/10 tasks)
 - [ ] Phase 5: Real-time SignalR (0/8 tasks)
 

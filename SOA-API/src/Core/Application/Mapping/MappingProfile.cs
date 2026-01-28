@@ -6,6 +6,7 @@ using Application.Models.User.Response;
 using Application.Features.ShopSettings.Models;
 using Application.Features.Toppings.Models;
 using Application.Features.Vouchers.Models;
+using Application.Features.Categories.Dtos;
 
 namespace Application.Mapping
 {
@@ -27,6 +28,11 @@ namespace Application.Mapping
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description);
+
+            // Category mappings
+            TypeAdapterConfig<Category, CategoryResponse>.NewConfig()
+                .Map(dest => dest.CreatedDate, src => src.CreatedAt)
+                .Map(dest => dest.ModifiedDate, src => src.UpdatedAt);
 
             // ShopSettings mappings
             TypeAdapterConfig<ShopSetting, ShopSettingsResponse>.NewConfig()

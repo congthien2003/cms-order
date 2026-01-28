@@ -122,6 +122,26 @@ namespace Presentation.Host.Controllers
             var result = await Mediator.Send(command, cancellationToken);
             return Ok(result);
         }
+
+        /// <summary>
+        /// Toggles the active status of a category.
+        /// </summary>
+        /// <param name="id">The unique identifier of the category</param>
+        /// <param name="cancellationToken">Cancellation token for the operation</param>
+        /// <returns>The new active status of the category</returns>
+        /// <response code="200">Category status toggled successfully</response>
+        /// <response code="404">Category not found</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(Result<bool>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpPatch("{id}/toggle-status", Name = "ToggleCategoryStatus")]
+        public async Task<IActionResult> ToggleStatus(Guid id, CancellationToken cancellationToken)
+        {
+            var command = new ToggleCategoryStatusCommand(id);
+            var result = await Mediator.Send(command, cancellationToken);
+            return Ok(result);
+        }
     }
 }
 

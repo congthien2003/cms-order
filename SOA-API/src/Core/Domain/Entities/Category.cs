@@ -26,9 +26,19 @@ namespace Domain.Entities
         public int DisplayOrder { get; private set; }
 
         /// <summary>
+        /// Gets or sets whether the category is active.
+        /// </summary>
+        public bool IsActive { get; private set; } = true;
+
+        /// <summary>
+        /// Gets the URL of the category image.
+        /// </summary>
+        public string? ImageUrl { get; private set; }
+
+        /// <summary>
         /// Navigation property for related products.
         /// </summary>
-        //public ICollection<Product> Products { get; private set; } = new List<Product>();
+        public virtual ICollection<Product> Products { get; private set; } = new List<Product>();
 
         /// <summary>
         /// Initializes a new instance of the Category class.
@@ -54,6 +64,7 @@ namespace Domain.Entities
             Name = name;
             Description = description ?? string.Empty;
             DisplayOrder = displayOrder;
+            IsActive = true;
         }
 
         /// <summary>
@@ -109,6 +120,25 @@ namespace Domain.Entities
                 return;
 
             DisplayOrder = newOrder;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Toggles the active status of the category.
+        /// </summary>
+        public void ToggleStatus()
+        {
+            IsActive = !IsActive;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Updates the image URL of the category.
+        /// </summary>
+        /// <param name="imageUrl">The new image URL</param>
+        public void UpdateImageUrl(string? imageUrl)
+        {
+            ImageUrl = imageUrl;
             UpdatedAt = DateTime.UtcNow;
         }
     }
