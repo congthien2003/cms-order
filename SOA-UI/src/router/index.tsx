@@ -1,21 +1,38 @@
-import { createBrowserRouter } from 'react-router-dom';
-import ErrorPage from '@/pages/error/ErrorPage';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import AdminLayout from '@/components/layout/AdminLayout';
-import UserPage from '@/pages/users';
-import DemoPage from '@/pages/demo';
-import RolePage from '@/pages/roles';
+import { LoginPage } from '@/pages/auth';
+import { ProtectedRoute } from '@/components/auth';
+import {
+  DashboardPage,
+  CategoriesPage,
+  ProductsPage,
+  ToppingsPage,
+  VouchersPage,
+  OrdersPage,
+  SettingsPage,
+} from '@/pages/pos';
 
 const router = createBrowserRouter([
   {
+    path: '/login',
+    element: <LoginPage />,
+  },
+  {
     path: '/',
-    element: <AdminLayout />,
-    // errorElement: <ErrorPage />,
+    element: (
+      <ProtectedRoute>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
     children: [
-      { path: 'dashboard', element: <div>Dashboard</div> },
-      { path: 'users', element: <UserPage /> },
-      { path: 'roles', element: <RolePage /> },
-      { path: 'settings', element: <div>Settings</div> },
-      { path: 'demo', element: <DemoPage /> },
+      { index: true, element: <Navigate to="/dashboard" replace /> },
+      { path: 'dashboard', element: <DashboardPage /> },
+      { path: 'orders', element: <OrdersPage /> },
+      { path: 'products', element: <ProductsPage /> },
+      { path: 'categories', element: <CategoriesPage /> },
+      { path: 'toppings', element: <ToppingsPage /> },
+      { path: 'vouchers', element: <VouchersPage /> },
+      { path: 'settings', element: <SettingsPage /> },
     ],
   },
 ]);

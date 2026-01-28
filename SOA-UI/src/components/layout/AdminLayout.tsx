@@ -1,16 +1,9 @@
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from './sidebar/Sidebar';
 import { SidebarProvider } from './sidebar/SidebarProvider';
-import AuthProvider from '@/providers/authProvider/AuthProvider';
-import { useAuth } from '@/providers/authProvider/useAuth';
 
 function AdminLayout() {
-  const { isAuthenticated } = useAuth();
-
-  console.log('isAuthenticated', isAuthenticated);
-
   return (
-    // <AuthProvider>
     <SidebarProvider>
       <div className="min-h-screen bg-background">
         <Sidebar />
@@ -21,7 +14,6 @@ function AdminLayout() {
         </div>
       </div>
     </SidebarProvider>
-    // </AuthProvider>
   );
 }
 

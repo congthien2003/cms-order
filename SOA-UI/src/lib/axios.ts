@@ -19,6 +19,7 @@ const apiClient: AxiosInstance = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     const token = getSessionStorage(SessionStorageKey.ACCESS_TOKEN);
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -32,6 +33,12 @@ apiClient.interceptors.request.use(
 // Response interceptor - xử lý lỗi và redirect
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
+    // Normalize response: convert isSuccess to success for consistency
+    if (response.data && typeof response.data === 'object') {
+      if ('isSuccess' in response.data && !('success' in response.data)) {
+        response.data.success = response.data.isSuccess;
+      }
+    }
     return response;
   },
   (error: AxiosError) => {

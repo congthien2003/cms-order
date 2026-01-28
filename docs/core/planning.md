@@ -9,29 +9,31 @@
 
 ## 📊 Progress Summary
 
-**Overall Progress:** 63/130 tasks (48.5%)
+**Overall Progress:** 75/130 tasks (57.7%)
 
 - ✅ **Phase 1 COMPLETED:** 19/19 tasks (100%)
 - ✅ **Phase 2 COMPLETED:** 16/16 tasks (100%)
 - ✅ **Phase 3 COMPLETED:** 14/14 tasks (100%)
 - ✅ **Phase 4 COMPLETED:** 8/8 tasks (100%)
-- ⬜ **Remaining:** 73 tasks across Phases 5-9
+- ⬜ **Phase 5:** 0/8 tasks (0%) - SignalR (Skipped for now)
+- 🔄 **Phase 6 IN PROGRESS:** 12/15 tasks (80%)
+- ⬜ **Remaining:** 61 tasks across Phases 7-9
 
 ---
 
 ## 🎯 Tổng quan các Phase
 
-| Phase   | Nội dung                          | Ưu tiên       | Trạng thái        |
-| ------- | --------------------------------- | ------------- | ----------------- |
-| Phase 1 | Database Design & Domain Setup    | 🔴 Cao        | ✅ Hoàn thành     |
-| Phase 2 | Backend API - Core Entities       | 🔴 Cao        | ✅ Hoàn thành     |
-| Phase 3 | Backend API - Order & Promotion   | 🔴 Cao        | ✅ Hoàn thành     |
-| Phase 4 | Backend API - Dashboard & Reports | 🟡 Trung bình | ✅ Hoàn thành     |
-| Phase 5 | Backend API - Real-time (SignalR) | 🟡 Trung bình | ⬜ Chưa bắt đầu   |
-| Phase 6 | Admin UI - Setup & Auth           | 🔴 Cao        | ⬜ Chưa bắt đầu   |
-| Phase 7 | Admin UI - Entity Management      | 🔴 Cao        | ⬜ Chưa bắt đầu   |
-| Phase 8 | Admin UI - Order & Dashboard      | 🟡 Trung bình | ⬜ Chưa bắt đầu   |
-| Phase 9 | Mobile App (React Native)         | 🟢 Phase sau  | ⬜ Chưa bắt đầu   |
+| Phase   | Nội dung                          | Ưu tiên       | Trạng thái      |
+| ------- | --------------------------------- | ------------- | --------------- |
+| Phase 1 | Database Design & Domain Setup    | 🔴 Cao        | ✅ Hoàn thành   |
+| Phase 2 | Backend API - Core Entities       | 🔴 Cao        | ✅ Hoàn thành   |
+| Phase 3 | Backend API - Order & Promotion   | 🔴 Cao        | ✅ Hoàn thành   |
+| Phase 4 | Backend API - Dashboard & Reports | 🟡 Trung bình | ✅ Hoàn thành   |
+| Phase 5 | Backend API - Real-time (SignalR) | 🟡 Trung bình | ⏸️ Tạm hoãn     |
+| Phase 6 | Admin UI - Setup & Auth           | 🔴 Cao        | 🔄 Đang làm     |
+| Phase 7 | Admin UI - Entity Management      | 🔴 Cao        | ⬜ Chưa bắt đầu |
+| Phase 8 | Admin UI - Order & Dashboard      | 🟡 Trung bình | ⬜ Chưa bắt đầu |
+| Phase 9 | Mobile App (React Native)         | 🟢 Phase sau  | ⬜ Chưa bắt đầu |
 
 ---
 
@@ -376,33 +378,33 @@
 
 ### 6.1 Project Setup
 
-- [ ] **TODO-6.1.1:** Verify các packages đã cài đặt (React, TailwindCSS, Shadcn)
-- [ ] **TODO-6.1.2:** Cấu hình routing (React Router)
-- [ ] **TODO-6.1.3:** Setup Axios interceptors cho API calls
-- [ ] **TODO-6.1.4:** Cấu hình environment variables
+- [x] **TODO-6.1.1:** Verify các packages đã cài đặt (React, TailwindCSS, Shadcn) ✅
+- [x] **TODO-6.1.2:** Cấu hình routing (React Router) ✅
+- [x] **TODO-6.1.3:** Setup Axios interceptors cho API calls ✅
+- [x] **TODO-6.1.4:** Cấu hình environment variables ✅
 
 ### 6.2 Layout Components
 
-- [ ] **TODO-6.2.1:** Tạo MainLayout component (Sidebar + Header + Content)
-- [ ] **TODO-6.2.2:** Tạo Sidebar component với menu items
+- [x] **TODO-6.2.1:** Tạo MainLayout component (Sidebar + Header + Content) ✅
+- [x] **TODO-6.2.2:** Tạo Sidebar component với menu items ✅
 - [ ] **TODO-6.2.3:** Tạo Header component (user info, notifications)
 - [ ] **TODO-6.2.4:** Tạo Breadcrumb component
 
 ### 6.3 Common Components
 
-- [ ] **TODO-6.3.1:** Tạo DataTable component (với sorting, pagination)
-- [ ] **TODO-6.3.2:** Tạo ConfirmDialog component
-- [ ] **TODO-6.3.3:** Tạo FormModal component
+- [x] **TODO-6.3.1:** Tạo DataTable component (với sorting, pagination) ✅
+- [x] **TODO-6.3.2:** Tạo ConfirmDialog component ✅
+- [x] **TODO-6.3.3:** Tạo FormModal component ✅
 - [ ] **TODO-6.3.4:** Tạo StatusBadge component
-- [ ] **TODO-6.3.5:** Tạo Loading/Spinner components
-- [ ] **TODO-6.3.6:** Tạo EmptyState component
+- [x] **TODO-6.3.5:** Tạo Loading/Spinner components ✅
+- [x] **TODO-6.3.6:** Tạo EmptyState component ✅
 
 ### 6.4 Authentication
 
-- [ ] **TODO-6.4.1:** Tạo Login page
-- [ ] **TODO-6.4.2:** Implement auth context/provider
-- [ ] **TODO-6.4.3:** Tạo ProtectedRoute component
-- [ ] **TODO-6.4.4:** Implement logout functionality
+- [x] **TODO-6.4.1:** Tạo Login page ✅
+- [x] **TODO-6.4.2:** Implement auth context/provider ✅
+- [x] **TODO-6.4.3:** Tạo ProtectedRoute component ✅
+- [x] **TODO-6.4.4:** Implement logout functionality ✅
 
 ---
 
@@ -548,11 +550,11 @@
 - [x] Phase 2: Core Entities CRUD (16/16 tasks) ✅
 - [x] Phase 3: Order & Promotion (14/14 tasks) ✅
 - [x] Phase 4: Dashboard & Reports (8/8 tasks) ✅
-- [ ] Phase 5: Real-time SignalR (0/8 tasks)
+- [ ] Phase 5: Real-time SignalR (0/8 tasks) - ⏸️ Tạm hoãn
 
 ### Admin UI
 
-- [ ] Phase 6: Setup & Auth (0/15 tasks)
+- [x] Phase 6: Setup & Auth (12/15 tasks) 🔄 80%
 - [ ] Phase 7: Entity Management (0/17 tasks)
 - [ ] Phase 8: Order & Dashboard (0/16 tasks)
 

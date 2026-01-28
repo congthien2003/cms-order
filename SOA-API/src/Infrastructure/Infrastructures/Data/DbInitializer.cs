@@ -1,6 +1,9 @@
 using Domain.Entities;
 using Domain.Entities.Enums;
+using Domain.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using Shared.Helpers;
 
 namespace Infrastructures.Data
 {
@@ -17,6 +20,10 @@ namespace Infrastructures.Data
             // Ensure database is created
             await context.Database.MigrateAsync();
 
+            await SeedRolesAsync(context);
+
+            await SeedUsersAsync(context);
+            
             // Seed Shop Settings (Singleton)
             await SeedShopSettingsAsync(context);
 
@@ -32,6 +39,59 @@ namespace Infrastructures.Data
             // Seed Sample Vouchers
             await SeedVouchersAsync(context);
 
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task SeedRolesAsync(ApplicationDbContext context)
+        {
+            if (await context.Roles.AnyAsync())
+                return;
+
+            var roles = new List<Role>
+            {
+                Role.Create("Admin", "Administrator with full access"),
+                Role.Create("Manager", "Store manager"),
+                Role.Create("Staff", "Store staff"),
+                Role.Create("Customer", "Customer account")
+            };
+
+            await context.Roles.AddRangeAsync(roles);
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task SeedUsersAsync(ApplicationDbContext context)
+        {
+            if (await context.Users.AnyAsync())
+                return;
+
+            var adminRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == "Admin");
+            if (adminRole == null)
+                return;
+
+            // Create admin user
+            // Password: Admin@123
+            var passwordHash = Hashing.HashPassword("Admin@123", out byte[] salt);
+            var saltString = Convert.ToBase64String(salt);
+
+            var adminUser = new User
+            {
+                Id = Guid.NewGuid(),
+                UserName = "admin",
+                FullName = "System Administrator",
+                Email = "admin@storeorder.com",
+                PasswordHash = passwordHash,
+                Salting = saltString,
+                IsEmailConfirmed = true,
+                PhoneNumber = "0123456789",
+                IsPhoneNumberConfirmed = true,
+                IsActive = true,
+                CreatedAt = DateTime.UtcNow,
+                CreatedById = null
+            };
+
+            adminUser.AddRole(adminRole);
+
+            await context.Users.AddAsync(adminUser);
             await context.SaveChangesAsync();
         }
 

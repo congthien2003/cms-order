@@ -1,9 +1,17 @@
 import type { User } from '@/models/user/entity/user';
 import { useState, useEffect } from 'react';
 import { AuthContext } from './authContext';
+import { authService } from '@/services/authService';
+import {
+  SessionStorageKey,
+  getSessionStorage,
+  setSessionStorage,
+  removeSessionStorage,
+} from '@/lib/sessionStorage';
 
 export type AuthContextType = {
   isAuthenticated: boolean;
+  isLoading: boolean;
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
@@ -11,26 +19,32 @@ export type AuthContextType = {
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
 
   // Kiểm tra token khi component mount
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      setIsAuthenticated(true);
-      // TODO: Fetch user info from token hoặc API
-    }
+    const checkAuth = async () => {
+      const token = getSessionStorage(SessionStorageKey.ACCESS_TOKEN);
+      if (token) {
+        setIsAuthenticated(true);
+        // TODO: Fetch user info from token hoặc API
+      }
+      setIsLoading(false);
+    };
+    checkAuth();
   }, []);
 
   const login = async (email: string, password: string) => {
     try {
-      // TODO: Implement login API call
-      console.log('login', email, password);
-
-      // Giả lập login thành công
-      const mockToken = 'mock-access-token';
-      localStorage.setItem('accessToken', mockToken);
-      setIsAuthenticated(true);
+      const response = await authService.login({ email, password });
+      // AuthResponse has tokens property directly (not wrapped in ApiResponse)
+      if (response.accessToken) {
+        setSessionStorage(SessionStorageKey.ACCESS_TOKEN, response.accessToken);
+        setIsAuthenticated(true);
+      } else {
+        throw new Error('Login failed');
+      }
     } catch (error) {
       console.error('Login failed:', error);
       throw error;
@@ -38,14 +52,15 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    removeSessionStorage(SessionStorageKey.ACCESS_TOKEN);
     setIsAuthenticated(false);
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, isLoading, user, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

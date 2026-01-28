@@ -139,3 +139,7 @@ export const showLoading = (message: string, options?: ToastOptions) =>
 export const dismissToast = (toastId: string) => ToastHelper.dismiss(toastId);
 
 export const dismissAllToasts = () => ToastHelper.dismissAll();
+
+// Alias for backward compatibility
+export const showSuccessToast = showSuccess;
+export const showErrorToast = showError;

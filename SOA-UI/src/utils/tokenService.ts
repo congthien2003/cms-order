@@ -1,11 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { claimTypesConstants } from '@/constants/claimTypes';
-import type { UserInfo } from '@/stores/user/userInfo';
 import { jwtDecode } from 'jwt-decode';
+
+export interface UserInfo {
+  nameid: string;
+  fullName: string;
+  email: string;
+  roles: string[];
+  exp: number;
+}
 
 export class TokenService {
   getAccessToken(): string {
-    return '';
+    return sessionStorage.getItem('accessToken') || '';
   }
 
   getCurrentRoles(): string[] {

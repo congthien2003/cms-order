@@ -2,25 +2,32 @@ import { cn } from '@/lib/utils';
 import {
   LayoutDashboard,
   Settings,
-  Wallet,
   Menu,
-  Users,
   HelpCircle,
   LogOut,
-  BarChartIcon,
+  Coffee,
+  ShoppingCart,
+  Package,
+  FolderTree,
+  Cherry,
+  Ticket,
   type LucideProps,
 } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSidebar } from './useSidebar';
 import { Button } from '@/components/ui/button';
 import { RoleKeys } from '@/constants/roles';
 import { TokenService } from '@/utils/tokenService';
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/providers/authProvider/useAuth';
 
 export function Sidebar() {
   const { isOpen, toggle } = useSidebar();
   const pathname = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
   const currentRoles = new TokenService().getCurrentRoles();
+
   const [filteredNavItems, setFilteredNavItems] = useState<NavItem[]>([]);
   useEffect(() => {
     setFilteredNavItems(
@@ -28,7 +35,13 @@ export function Sidebar() {
         item.roles?.some((role) => currentRoles.includes(role))
       )
     );
-  }, [currentRoles]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <>
@@ -49,7 +62,10 @@ export function Sidebar() {
         )}
       >
         <div className="flex h-14 items-center border-b px-4">
-          <span className="text-lg font-semibold">Sambo Admin</span>
+          <div className="flex items-center gap-2">
+            <Coffee className="h-6 w-6 text-amber-600" />
+            <span className="text-lg font-semibold">Coffee POS</span>
+          </div>
           <Button
             variant="ghost"
             size="icon"
@@ -81,65 +97,37 @@ export function Sidebar() {
           </div>
           <div className="border-t p-2">
             <nav className="grid gap-1">
-              {footerItems.map((item, index) => (
-                <div key={index}>
-                  {item.subItems ? (
-                    <div className="space-y-1">
-                      <Link
-                        to={item.href}
-                        className={cn(
-                          'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground',
-                          pathname.pathname === item.href
-                            ? 'bg-accent text-accent-foreground'
-                            : 'text-muted-foreground'
-                        )}
-                      >
-                        <item.icon className="h-5 w-5" />
-                        <span>{item.name}</span>
-                      </Link>
-                      <div className="pl-4 space-y-1">
-                        {item.subItems.map((subItem, subIndex) => (
-                          <Link
-                            key={subIndex}
-                            to={subItem.href}
-                            className={cn(
-                              'flex items-center gap-3 rounded-md px-3 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground',
-                              pathname.pathname === subItem.href
-                                ? 'bg-accent text-accent-foreground'
-                                : 'text-muted-foreground'
-                            )}
-                          >
-                            <span>{subItem.name}</span>
-                            {subItem.description && (
-                              <span className="ml-auto text-xs text-muted-foreground">
-                                {subItem.description}
-                              </span>
-                            )}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <Link
-                      to={item.href}
-                      className={cn(
-                        'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground',
-                        pathname.pathname === item.href
-                          ? 'bg-accent text-accent-foreground'
-                          : 'text-muted-foreground'
-                      )}
-                    >
-                      <item.icon className="h-5 w-5" />
-                      <span>{item.name}</span>
-                      {item.description && (
-                        <span className="ml-auto text-xs text-muted-foreground">
-                          {item.description}
-                        </span>
-                      )}
-                    </Link>
-                  )}
-                </div>
-              ))}
+              <Link
+                to="/settings"
+                className={cn(
+                  'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground',
+                  pathname.pathname === '/settings'
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-muted-foreground'
+                )}
+              >
+                <Settings className="h-5 w-5" />
+                <span>Cài đặt</span>
+              </Link>
+              <Link
+                to="/help"
+                className={cn(
+                  'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground',
+                  pathname.pathname === '/help'
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-muted-foreground'
+                )}
+              >
+                <HelpCircle className="h-5 w-5" />
+                <span>Trợ giúp</span>
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground text-muted-foreground w-full text-left"
+              >
+                <LogOut className="h-5 w-5" />
+                <span>Đăng xuất</span>
+              </button>
             </nav>
           </div>
         </div>
@@ -164,52 +152,34 @@ const navItems: NavItem[] = [
     icon: LayoutDashboard,
     roles: [RoleKeys.Admin],
   },
-  { name: 'Users', href: '/users', icon: Users, roles: [RoleKeys.Admin] },
-  { name: 'Roles', href: '/roles', icon: Wallet, roles: [RoleKeys.Admin] },
-  { name: 'Demo', href: '/demo', icon: BarChartIcon, roles: [RoleKeys.Admin] },
-
-  // { name: "Transactions", href: "/transactions", icon: Wallet },
-  // { name: "Analytics", href: "/analytics", icon: BarChart3 },
-];
-
-const footerItems = [
   {
-    name: 'Settings',
-    href: '/settings',
-    icon: Settings,
-    subItems: [
-      {
-        name: 'Profile',
-        href: '/settings/profile',
-        description: 'Update your details',
-      },
-      {
-        name: 'Security',
-        href: '/settings/security',
-        description: 'Manage your password',
-      },
-      {
-        name: 'Communication',
-        href: '/settings/communication',
-        description: 'Email and phone',
-      },
-      {
-        name: 'Permissions',
-        href: '/settings/permissions',
-        description: 'Access control',
-      },
-    ],
+    name: 'Đơn hàng',
+    href: '/orders',
+    icon: ShoppingCart,
+    roles: [RoleKeys.Admin],
   },
   {
-    name: 'Help',
-    href: '/help',
-    icon: HelpCircle,
-    description: 'Get support',
+    name: 'Sản phẩm',
+    href: '/products',
+    icon: Package,
+    roles: [RoleKeys.Admin],
   },
   {
-    name: 'Logout',
-    href: '/logout',
-    icon: LogOut,
-    description: 'Exit the app',
+    name: 'Danh mục',
+    href: '/categories',
+    icon: FolderTree,
+    roles: [RoleKeys.Admin],
+  },
+  {
+    name: 'Topping',
+    href: '/toppings',
+    icon: Cherry,
+    roles: [RoleKeys.Admin],
+  },
+  {
+    name: 'Voucher',
+    href: '/vouchers',
+    icon: Ticket,
+    roles: [RoleKeys.Admin],
   },
 ];

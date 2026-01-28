@@ -12,7 +12,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from './index';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 

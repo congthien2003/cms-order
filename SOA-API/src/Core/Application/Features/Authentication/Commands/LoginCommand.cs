@@ -49,7 +49,7 @@ namespace Application.Features.Authentication.Commands
                 throw new ValidationException("User has been blocked", "USER-NOT-ACTIVE");
             }
 
-            if (user.IsEmailConfirmed)
+            if (!user.IsEmailConfirmed)
             {
                 throw new ValidationException("Email is not confirmed", "EMAIL-NOT-CONFIRMED");
             }

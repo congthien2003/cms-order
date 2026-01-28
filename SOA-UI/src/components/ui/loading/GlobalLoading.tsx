@@ -1,10 +1,9 @@
-import { useSelector } from 'react-redux';
+interface GlobalLoadingProps {
+  isLoading?: boolean;
+  message?: string;
+}
 
-import { selectLoading } from '@/stores/loading/loadingSlice';
-
-function GlobalLoading() {
-  const { isLoading, message } = useSelector(selectLoading);
-
+function GlobalLoading({ isLoading = false, message }: GlobalLoadingProps) {
   if (!isLoading) return null;
 
   return (
