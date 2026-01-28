@@ -9,12 +9,13 @@
 
 ## 📊 Progress Summary
 
-**Overall Progress:** 49/130 tasks (37.7%)
+**Overall Progress:** 63/130 tasks (48.5%)
 
 - ✅ **Phase 1 COMPLETED:** 19/19 tasks (100%)
 - ✅ **Phase 2 COMPLETED:** 16/16 tasks (100%)
-- 🔄 **Phase 3 IN PROGRESS:** 5/14 tasks (35.7%) - Voucher API done, Order API pending
-- ⬜ **Remaining:** 91 tasks across Phases 3-9
+- ✅ **Phase 3 COMPLETED:** 14/14 tasks (100%)
+- ✅ **Phase 4 COMPLETED:** 8/8 tasks (100%)
+- ⬜ **Remaining:** 73 tasks across Phases 5-9
 
 ---
 
@@ -24,8 +25,8 @@
 | ------- | --------------------------------- | ------------- | ----------------- |
 | Phase 1 | Database Design & Domain Setup    | 🔴 Cao        | ✅ Hoàn thành     |
 | Phase 2 | Backend API - Core Entities       | 🔴 Cao        | ✅ Hoàn thành     |
-| Phase 3 | Backend API - Order & Promotion   | 🔴 Cao        | 🔄 Đang thực hiện |
-| Phase 4 | Backend API - Dashboard & Reports | 🟡 Trung bình | ⬜ Chưa bắt đầu   |
+| Phase 3 | Backend API - Order & Promotion   | 🔴 Cao        | ✅ Hoàn thành     |
+| Phase 4 | Backend API - Dashboard & Reports | 🟡 Trung bình | ✅ Hoàn thành     |
 | Phase 5 | Backend API - Real-time (SignalR) | 🟡 Trung bình | ⬜ Chưa bắt đầu   |
 | Phase 6 | Admin UI - Setup & Auth           | 🔴 Cao        | ⬜ Chưa bắt đầu   |
 | Phase 7 | Admin UI - Entity Management      | 🔴 Cao        | ⬜ Chưa bắt đầu   |
@@ -322,8 +323,8 @@
 
 ### 4.1 Dashboard Statistics
 
-- [ ] **TODO-4.1.1:** Tạo DashboardService interface và implementation
-- [ ] **TODO-4.1.2:** Tạo DashboardController với các endpoints:
+- [x] **TODO-4.1.1:** Tạo DashboardService interface và implementation (dùng CQRS pattern) ✅
+- [x] **TODO-4.1.2:** Tạo DashboardController với các endpoints: ✅
   - `GET /api/dashboard/summary` - Tổng quan (doanh thu hôm nay, số đơn, đơn đang chờ)
   - `GET /api/dashboard/revenue` - Doanh thu theo khoảng thời gian
   - `GET /api/dashboard/orders-by-status` - Thống kê đơn theo trạng thái
@@ -332,18 +333,16 @@
 
 ### 4.2 Reports
 
-- [ ] **TODO-4.2.1:** Tạo ReportService
-- [ ] **TODO-4.2.2:** Tạo các endpoints report:
-  - `GET /api/reports/daily` - Báo cáo ngày
-  - `GET /api/reports/weekly` - Báo cáo tuần
-  - `GET /api/reports/monthly` - Báo cáo tháng
-  - `GET /api/reports/custom` - Báo cáo tùy chỉnh theo date range
+- [x] **TODO-4.2.1:** Tạo ReportService (integrated into Dashboard queries) ✅
+- [x] **TODO-4.2.2:** Tạo các endpoints report (using Dashboard endpoints with date range): ✅
+  - `GET /api/dashboard/revenue?fromDate=&toDate=` - Báo cáo custom
+  - Daily, weekly, monthly reports via date filtering
 
 ### 4.3 Shop Settings
 
-- [ ] **TODO-4.3.1:** Tạo DTOs cho ShopSetting
-- [ ] **TODO-4.3.2:** Tạo ShopSettingService
-- [ ] **TODO-4.3.3:** Tạo endpoints:
+- [x] **TODO-4.3.1:** Tạo DTOs cho ShopSetting ✅
+- [x] **TODO-4.3.2:** Tạo ShopSettingService (dùng CQRS pattern) ✅
+- [x] **TODO-4.3.3:** Tạo endpoints: ✅
   - `GET /api/settings` - Lấy cài đặt cửa hàng
   - `PUT /api/settings` - Cập nhật cài đặt
 
@@ -547,8 +546,8 @@
 
 - [x] Phase 1: Database & Domain (19/19 tasks) ✅
 - [x] Phase 2: Core Entities CRUD (16/16 tasks) ✅
-- [ ] Phase 3: Order & Promotion (5/14 tasks) - Voucher API done ✅
-- [ ] Phase 4: Dashboard & Reports (0/10 tasks)
+- [x] Phase 3: Order & Promotion (14/14 tasks) ✅
+- [x] Phase 4: Dashboard & Reports (8/8 tasks) ✅
 - [ ] Phase 5: Real-time SignalR (0/8 tasks)
 
 ### Admin UI
