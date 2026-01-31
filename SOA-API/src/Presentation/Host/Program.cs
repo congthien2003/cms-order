@@ -5,6 +5,7 @@ using Infrastructures.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Host;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,12 +24,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
+    app.MapOpenApi();
+    app.MapScalarApiReference(options =>
     {
-        options.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.List);
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Store Order App - API v1");
-        options.RoutePrefix = "swagger";
+        options
+            .WithTitle("Store Order App - API")
+            .WithTheme(ScalarTheme.BluePlanet)
+            .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
     });
 }
 
