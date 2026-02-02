@@ -5,7 +5,6 @@ using Infrastructures.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Host;
-using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,17 +23,16 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
-    app.MapScalarApiReference(options =>
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
     {
-        options
-            .WithTitle("Store Order App - API")
-            .WithTheme(ScalarTheme.BluePlanet)
-            .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+        options.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.List);
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Store Order App - API v1");
+        options.RoutePrefix = "swagger";
     });
 }
 
-app.UseExceptionHandler(opt =>{});
+app.UseExceptionHandler(opt => { });
 
 app.UseLoggerMiddlewareExtensions();
 
@@ -48,14 +46,16 @@ app.MapControllers();
 
 app.UseCors("CorsPolicy");
 
+app.MapGet("/", () => Results.LocalRedirect("/swagger/index.html"));
+
 // Initialize database with seed data
-await app.InitializeDatabaseAsync();
+//await app.InitializeDatabaseAsync();
 
 try
 {
     Log.Information("Starting web host");
 
-    if(app.Environment.IsDevelopment())
+    if (app.Environment.IsDevelopment())
     {
         Log.Information("Running in Development environment");
     }

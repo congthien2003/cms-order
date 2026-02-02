@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.RateLimiting;
 using Serilog;
 using Asp.Versioning;
+using Microsoft.OpenApi.Models;
 using Application.Commons.MediatR;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.OpenApi;
-using Microsoft.OpenApi;
-
 namespace Host.Extensions
 {
     public static class ServiceExtensions
@@ -20,7 +16,7 @@ namespace Host.Extensions
             services.ConfigureJWT(configuration);
             services.ConfigureCors();
             services.ConfigureIISIntegration();
-            // services.ConfigureSwagger();
+            services.ConfigureSwagger();
             services.ConfigureRateLimiting(configuration);
             services.ConfigureApiVersioning();
             services.ConfigMediatR();
@@ -30,15 +26,15 @@ namespace Host.Extensions
         public static IServiceCollection ConfigureCors(this IServiceCollection services)
         {
             services.AddCors(options =>
-               {
-                   options.AddPolicy("CorsPolicy", builder =>
-                   builder.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyOrigin()
-                          //.WithOrigins("http://localhost:4200", "http://localhost:3000", "http://localhost:5173/")
-                          //.AllowCredentials()
-                          .AllowAnyHeader());
-               });
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyOrigin()
+                       //.WithOrigins("http://localhost:4200", "http://localhost:3000", "http://localhost:5173/")
+                       //.AllowCredentials()
+                       .AllowAnyHeader());
+            });
             return services;
         }
         public static void ConfigureIISIntegration(this IServiceCollection services) =>
@@ -57,54 +53,39 @@ namespace Host.Extensions
 
         public static void ConfigureSwagger(this IServiceCollection services)
         {
-            services.AddOpenApi(options =>
+            services.AddSwaggerGen(s =>
             {
-                options.AddDocumentTransformer((document, context, cancellationToken) =>
+                s.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    document.Info = new OpenApiInfo
-                    {
-                        Title = "Store Order App - API",
-                        Version = "v1",
-                        Description = "API by Sabo"
-                    };
-                    return Task.CompletedTask;
+                    Title = "Sabo - API Starter Kit",
+                    Version = "v1",
+                    Description = "API by Sabo",
                 });
 
-                options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
-            });
-        }
-
-        internal sealed class BearerSecuritySchemeTransformer(IAuthenticationSchemeProvider authenticationSchemeProvider) : IOpenApiDocumentTransformer
-        {
-            public async Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken cancellationToken)
-            {
-                var authenticationSchemes = await authenticationSchemeProvider.GetAllSchemesAsync();
-                if (authenticationSchemes.Any(authScheme => authScheme.Name == JwtBearerDefaults.AuthenticationScheme))
+                s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
-                    var securityScheme = new OpenApiSecurityScheme
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter your token in the text input below.\r\n\r\nExample: \"12345abcdef\""
+                });
+                s.AddSecurityRequirement(new OpenApiSecurityRequirement
                     {
-                        Type = SecuritySchemeType.Http,
-                        Scheme = JwtBearerDefaults.AuthenticationScheme,
-                        In = ParameterLocation.Header,
-                        BearerFormat = "JWT",
-                        Description = "JWT Authorization header using the Bearer scheme. Enter your token in the text input below."
-                    };
-
-                    document.Components ??= new OpenApiComponents();
-                    document.Components.SecuritySchemes[JwtBearerDefaults.AuthenticationScheme] = securityScheme;
-
-                    var schemeReference = new OpenApiSecuritySchemeReference(JwtBearerDefaults.AuthenticationScheme, document);
-
-                    foreach (var operation in document.Paths.Values.SelectMany(path => path.Operations))
-                    {
-                        operation.Value.Security ??= [];
-                        operation.Value.Security.Add(new OpenApiSecurityRequirement
                         {
-                            [schemeReference] = new List<string>()
-                        });
-                    }
-                }
-            }
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type=ReferenceType.SecurityScheme,
+                                    Id="Bearer"
+                                }
+                            },
+                            new string[]{}
+                        }
+                    });
+            });
         }
 
         public static void ConfigureRateLimiting(this IServiceCollection services, IConfiguration configuration)
@@ -138,7 +119,7 @@ namespace Host.Extensions
         }
 
         public static void ConfigMediatR(this IServiceCollection services)
-        { 
+        {
             services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(typeof(ApplicationAssemblyMarker).Assembly);
