@@ -1,98 +1,176 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { useState, useMemo, useCallback } from "react";
+import { View, FlatList, TouchableOpacity, RefreshControl } from "react-native";
+import { Image } from "expo-image";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { SafeArea } from "@/components/ui/safe-area";
+import { Input } from "@/components/ui/input";
+import { Loading } from "@/components/ui/loading";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Heading2, Body, Caption } from "@/components/ui/typography";
+import { useCategories } from "@/features/categories";
+import { useAuth } from "@/providers/authProvider";
+import { Category } from "@/models/category";
 
-export default function HomeScreen() {
+const PLACEHOLDER_IMAGE =
+  "https://via.placeholder.com/200x200.png?text=No+Image";
+
+function CategoryCard({
+  category,
+  onPress,
+}: {
+  category: Category;
+  onPress: () => void;
+}) {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
-
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.7}
+      className="flex-1 m-1.5 bg-white rounded-xl overflow-hidden border border-gray-100"
+      style={{
+        elevation: 2,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+      }}>
+      <Image
+        source={{ uri: category.imageUrl || PLACEHOLDER_IMAGE }}
+        style={{ width: "100%", height: 120 }}
+        contentFit="cover"
+        transition={200}
+      />
+      <View className="p-3">
+        <Body className="font-semibold" numberOfLines={1}>
+          {category.name}
+        </Body>
+        {category.description && (
+          <Caption className="text-gray-500 mt-0.5" numberOfLines={2}>
+            {category.description}
+          </Caption>
+        )}
+      </View>
+    </TouchableOpacity>
   );
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+export default function HomeScreen() {
+  const router = useRouter();
+  const { logout, user } = useAuth();
+  const { categories, isLoading, error, refetch } = useCategories();
+  const [searchText, setSearchText] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
+
+  const filteredCategories = useMemo(() => {
+    if (!searchText.trim()) return categories;
+    const query = searchText.toLowerCase();
+    return categories.filter(
+      (c) =>
+        c.name.toLowerCase().includes(query) ||
+        c.description?.toLowerCase().includes(query),
+    );
+  }, [categories, searchText]);
+
+  const handleCategoryPress = useCallback(
+    (category: Category) => {
+      router.push({
+        pathname: "/products",
+        params: { categoryId: category.id, categoryName: category.name },
+      });
+    },
+    [router],
+  );
+
+  const handleRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  }, [refetch]);
+
+  const renderCategory = useCallback(
+    ({ item }: { item: Category }) => (
+      <CategoryCard category={item} onPress={() => handleCategoryPress(item)} />
+    ),
+    [handleCategoryPress],
+  );
+
+  return (
+    <SafeArea>
+      <View className="flex-1 bg-gray-50">
+        {/* Header */}
+        <View className="bg-white px-4 pt-2 pb-3 border-b border-gray-100">
+          <View className="flex-row items-center justify-between mb-3">
+            <View>
+              <Heading2>Menu</Heading2>
+              {user && (
+                <Caption className="text-gray-500">
+                  Xin chào, {user.fullName}
+                </Caption>
+              )}
+            </View>
+            <TouchableOpacity
+              onPress={logout}
+              className="p-2"
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+              <Ionicons name="log-out-outline" size={24} color="#64748b" />
+            </TouchableOpacity>
+          </View>
+
+          {/* Search */}
+          <Input
+            placeholder="Tìm kiếm danh mục..."
+            value={searchText}
+            onChangeText={setSearchText}
+            leftIcon={<Ionicons name="search" size={18} color="#9ca3af" />}
+            rightIcon={
+              searchText ? (
+                <TouchableOpacity onPress={() => setSearchText("")}>
+                  <Ionicons name="close-circle" size={18} color="#9ca3af" />
+                </TouchableOpacity>
+              ) : undefined
+            }
+          />
+        </View>
+
+        {/* Content */}
+        {isLoading && !refreshing ? (
+          <Loading />
+        ) : error ? (
+          <EmptyState
+            title="Không thể tải danh mục"
+            description={error}
+            icon="alert-circle-outline"
+            actionLabel="Thử lại"
+            onAction={refetch}
+          />
+        ) : (
+          <FlatList
+            data={filteredCategories}
+            renderItem={renderCategory}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
+            contentContainerStyle={{ padding: 8, paddingBottom: 20 }}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={handleRefresh}
+              />
+            }
+            ListEmptyComponent={
+              <EmptyState
+                title={searchText ? "Không tìm thấy" : "Chưa có danh mục"}
+                description={
+                  searchText
+                    ? "Không có danh mục nào khớp với tìm kiếm"
+                    : "Danh mục sản phẩm sẽ hiển thị ở đây"
+                }
+                icon="folder-open-outline"
+              />
+            }
+          />
+        )}
+      </View>
+    </SafeArea>
+  );
+}

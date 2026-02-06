@@ -3,47 +3,49 @@ import { ApiResponse } from "@/models/common";
 import { Topping, ToppingListResponse } from "@/models/topping";
 
 class ToppingService {
-	private apiRoute = {
-		GET_LIST: "/toppings",
-		GET_BY_ID: "/toppings/:id",
-		GET_BY_PRODUCT: "/toppings/product/:productId",
-	};
+  /**
+   * API routes matching ToppingsController
+   * Controller: api/toppings (non-versioned)
+   */
+  private apiRoute = {
+    BASE: "/toppings",
+  };
 
-	/**
-	 * Get all toppings
-	 */
-	async getList(): Promise<ApiResponse<ToppingListResponse>> {
-		return api.get<ApiResponse<ToppingListResponse>>(this.apiRoute.GET_LIST);
-	}
+  /**
+   * Get list of toppings with optional filters
+   * API: GET /toppings?isActive=&searchTerm=&pageNumber=&pageSize=
+   */
+  async getList(params?: {
+    isActive?: boolean;
+    searchTerm?: string;
+    pageNumber?: number;
+    pageSize?: number;
+  }): Promise<ApiResponse<ToppingListResponse>> {
+    return api.get<ApiResponse<ToppingListResponse>>(this.apiRoute.BASE, {
+      params: {
+        isActive: params?.isActive,
+        searchTerm: params?.searchTerm,
+        pageNumber: params?.pageNumber ?? 1,
+        pageSize: params?.pageSize ?? 50,
+      },
+    });
+  }
 
-	/**
-	 * Get active toppings only
-	 */
-	async getActiveToppings(): Promise<ApiResponse<ToppingListResponse>> {
-		return api.get<ApiResponse<ToppingListResponse>>(this.apiRoute.GET_LIST, {
-			params: { isActive: true },
-		});
-	}
+  /**
+   * Get active toppings only
+   * API: GET /toppings?isActive=true
+   */
+  async getActiveToppings(): Promise<ApiResponse<ToppingListResponse>> {
+    return this.getList({ isActive: true });
+  }
 
-	/**
-	 * Get toppings available for a specific product
-	 */
-	async getByProduct(
-		productId: string,
-	): Promise<ApiResponse<ToppingListResponse>> {
-		return api.get<ApiResponse<ToppingListResponse>>(
-			this.apiRoute.GET_BY_PRODUCT.replace(":productId", productId),
-		);
-	}
-
-	/**
-	 * Get topping by ID
-	 */
-	async getById(id: string): Promise<ApiResponse<Topping>> {
-		return api.get<ApiResponse<Topping>>(
-			this.apiRoute.GET_BY_ID.replace(":id", id),
-		);
-	}
+  /**
+   * Get topping by ID
+   * API: GET /toppings/{id}
+   */
+  async getById(id: string): Promise<ApiResponse<Topping>> {
+    return api.get<ApiResponse<Topping>>(`${this.apiRoute.BASE}/${id}`);
+  }
 }
 
 export default new ToppingService();

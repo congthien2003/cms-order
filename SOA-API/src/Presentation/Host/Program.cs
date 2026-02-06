@@ -36,7 +36,7 @@ app.UseExceptionHandler(opt => { });
 
 app.UseLoggerMiddlewareExtensions();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 

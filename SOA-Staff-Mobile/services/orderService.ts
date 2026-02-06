@@ -1,91 +1,184 @@
 import api from "@/lib/api";
 import { ApiResponse, PaginationParams } from "@/models/common";
 import {
-	Order,
-	OrderListResponse,
-	OrderDetailResponse,
-	CreateOrderRequest,
-	UpdateOrderStatusRequest,
+  Order,
+  OrderListResponse,
+  OrderDetailResponse,
+  CreateOrderRequest,
+  UpdateOrderStatusRequest,
 } from "@/models/order";
 
-interface OrderQueryParams extends PaginationParams {
-	status?: string;
-	fromDate?: string;
-	toDate?: string;
+interface OrderQueryParams {
+  pageNumber?: number;
+  pageSize?: number;
+  search?: string;
+  status?: string;
+  paymentStatus?: string;
+  fromDate?: string;
+  toDate?: string;
 }
 
 class OrderService {
-	private apiRoute = {
-		GET_LIST: "/orders",
-		GET_BY_ID: "/orders/:id",
-		CREATE: "/orders",
-		UPDATE_STATUS: "/orders/:id/status",
-		CANCEL: "/orders/:id/cancel",
-	};
+  /**
+   * API routes matching OrdersController
+   * Controller: api/orders (non-versioned)
+   */
+  private apiRoute = {
+    BASE: "/orders",
+    QUEUE: "/orders/queue",
+    TODAY: "/orders/today",
+  };
 
-	/**
-	 * Get orders list
-	 */
-	async getList(
-		params?: OrderQueryParams,
-	): Promise<ApiResponse<OrderListResponse>> {
-		return api.get<ApiResponse<OrderListResponse>>(this.apiRoute.GET_LIST, {
-			params,
-		});
-	}
+  /**
+   * Get orders list with filters
+   * API: GET /orders?pageNumber=&pageSize=&search=&status=&fromDate=&toDate=
+   */
+  async getList(
+    params?: OrderQueryParams,
+  ): Promise<ApiResponse<OrderListResponse>> {
+    return api.get<ApiResponse<OrderListResponse>>(this.apiRoute.BASE, {
+      params: {
+        pageNumber: params?.pageNumber ?? 1,
+        pageSize: params?.pageSize ?? 20,
+        search: params?.search,
+        status: params?.status,
+        paymentStatus: params?.paymentStatus,
+        fromDate: params?.fromDate,
+        toDate: params?.toDate,
+      },
+    });
+  }
 
-	/**
-	 * Get order by ID
-	 */
-	async getById(id: string): Promise<ApiResponse<OrderDetailResponse>> {
-		return api.get<ApiResponse<OrderDetailResponse>>(
-			this.apiRoute.GET_BY_ID.replace(":id", id),
-		);
-	}
+  /**
+   * Get order by ID
+   * API: GET /orders/{id}
+   */
+  async getById(id: string): Promise<ApiResponse<OrderDetailResponse>> {
+    return api.get<ApiResponse<OrderDetailResponse>>(
+      `${this.apiRoute.BASE}/${id}`,
+    );
+  }
 
-	/**
-	 * Create new order
-	 */
-	async create(data: CreateOrderRequest): Promise<ApiResponse<Order>> {
-		return api.post<ApiResponse<Order>>(this.apiRoute.CREATE, data);
-	}
+  /**
+   * Get order by order number
+   * API: GET /orders/number/{orderNumber}
+   */
+  async getByNumber(
+    orderNumber: string,
+  ): Promise<ApiResponse<OrderDetailResponse>> {
+    return api.get<ApiResponse<OrderDetailResponse>>(
+      `${this.apiRoute.BASE}/number/${orderNumber}`,
+    );
+  }
 
-	/**
-	 * Update order status
-	 */
-	async updateStatus(
-		id: string,
-		data: UpdateOrderStatusRequest,
-	): Promise<ApiResponse<Order>> {
-		return api.patch<ApiResponse<Order>>(
-			this.apiRoute.UPDATE_STATUS.replace(":id", id),
-			data,
-		);
-	}
+  /**
+   * Get orders in queue (Pending, Confirmed, Preparing, Ready)
+   * API: GET /orders/queue
+   */
+  async getQueue(): Promise<ApiResponse<OrderListResponse>> {
+    return api.get<ApiResponse<OrderListResponse>>(this.apiRoute.QUEUE);
+  }
 
-	/**
-	 * Cancel order
-	 */
-	async cancel(id: string): Promise<ApiResponse<Order>> {
-		return api.post<ApiResponse<Order>>(
-			this.apiRoute.CANCEL.replace(":id", id),
-		);
-	}
+  /**
+   * Get today's orders
+   * API: GET /orders/today
+   */
+  async getTodayOrders(): Promise<ApiResponse<OrderListResponse>> {
+    return api.get<ApiResponse<OrderListResponse>>(this.apiRoute.TODAY);
+  }
 
-	/**
-	 * Get today's orders
-	 */
-	async getTodayOrders(): Promise<ApiResponse<OrderListResponse>> {
-		const today = new Date().toISOString().split("T")[0];
-		return this.getList({ fromDate: today, toDate: today });
-	}
+  /**
+   * Create new order
+   * API: POST /orders
+   */
+  async create(data: CreateOrderRequest): Promise<ApiResponse<Order>> {
+    return api.post<ApiResponse<Order>>(this.apiRoute.BASE, data);
+  }
 
-	/**
-	 * Get pending orders
-	 */
-	async getPendingOrders(): Promise<ApiResponse<OrderListResponse>> {
-		return this.getList({ status: "pending" });
-	}
+  /**
+   * Update order status
+   * API: PATCH /orders/{id}/status
+   */
+  async updateStatus(
+    id: string,
+    data: UpdateOrderStatusRequest,
+  ): Promise<ApiResponse<Order>> {
+    return api.patch<ApiResponse<Order>>(
+      `${this.apiRoute.BASE}/${id}/status`,
+      data,
+    );
+  }
+
+  /**
+   * Update payment status
+   * API: PATCH /orders/{id}/payment
+   */
+  async updatePaymentStatus(
+    id: string,
+    data: { paymentStatus: string; paymentMethod?: string },
+  ): Promise<ApiResponse<Order>> {
+    return api.patch<ApiResponse<Order>>(
+      `${this.apiRoute.BASE}/${id}/payment`,
+      data,
+    );
+  }
+
+  /**
+   * Cancel order
+   * API: POST /orders/{id}/cancel
+   */
+  async cancel(id: string, reason?: string): Promise<ApiResponse<Order>> {
+    return api.post<ApiResponse<Order>>(`${this.apiRoute.BASE}/${id}/cancel`, {
+      reason,
+    });
+  }
+
+  /**
+   * Get order receipt for printing
+   * API: GET /orders/{id}/receipt
+   */
+  async getReceipt(id: string): Promise<ApiResponse<any>> {
+    return api.get<ApiResponse<any>>(`${this.apiRoute.BASE}/${id}/receipt`);
+  }
+
+  /**
+   * Quick action - Confirm order
+   * API: POST /orders/{id}/confirm
+   */
+  async confirmOrder(id: string): Promise<ApiResponse<Order>> {
+    return api.post<ApiResponse<Order>>(`${this.apiRoute.BASE}/${id}/confirm`);
+  }
+
+  /**
+   * Quick action - Start preparing
+   * API: POST /orders/{id}/prepare
+   */
+  async prepareOrder(id: string): Promise<ApiResponse<Order>> {
+    return api.post<ApiResponse<Order>>(`${this.apiRoute.BASE}/${id}/prepare`);
+  }
+
+  /**
+   * Quick action - Mark order as ready
+   * API: POST /orders/{id}/ready
+   */
+  async markReady(id: string): Promise<ApiResponse<Order>> {
+    return api.post<ApiResponse<Order>>(`${this.apiRoute.BASE}/${id}/ready`);
+  }
+
+  /**
+   * Quick action - Complete order
+   * API: POST /orders/{id}/complete
+   */
+  async completeOrder(id: string): Promise<ApiResponse<Order>> {
+    return api.post<ApiResponse<Order>>(`${this.apiRoute.BASE}/${id}/complete`);
+  }
+
+  /**
+   * Get pending orders
+   */
+  async getPendingOrders(): Promise<ApiResponse<OrderListResponse>> {
+    return this.getList({ status: "Pending" });
+  }
 }
 
 export default new OrderService();
