@@ -64,9 +64,26 @@ namespace Application.Features.Authentication.Commands
 
             string accessToken = _jwtManager.GenerateToken(user);
 
+            // Map user to response DTO
+            var userInfo = new Application.Models.User.Response.UserInfoResponse
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                FullName = user.FullName,
+                Email = user.Email,
+                IsEmailConfirmed = user.IsEmailConfirmed,
+                PhoneNumber = user.PhoneNumber,
+                IsPhoneNumberConfirmed = user.IsPhoneNumberConfirmed,
+                LastLoginAt = user.LastLoginAt,
+                Roles = user.Roles?.Select(r => r.Name).ToList() ?? new List<string>(),
+                ProfilePictureUrl = user.ProfilePictureUrl,
+                IsActive = user.IsActive
+            };
+
             return Result<LoginResponse>.Success("Login successful.", new LoginResponse
             {
-                AccessToken = accessToken
+                AccessToken = accessToken,
+                User = userInfo
             });
         }
     }

@@ -1,20 +1,9 @@
 import { User } from "../entity/user";
 
 /**
- * Login response payload
+ * Login response payload - matches API LoginResponse
  */
 export interface LoginResponse {
-	accessToken: string;
-	refreshToken: string;
-	expiresIn: number;
-	user: User;
-}
-
-/**
- * Refresh token response payload
- */
-export interface RefreshTokenResponse {
-	accessToken: string;
-	refreshToken: string;
-	expiresIn: number;
+  accessToken: string;
+  user: User;
 }

@@ -1,13 +1,7 @@
 import api from "@/lib/api";
 import tokenService from "@/utils/tokenService";
 import { ApiResponse } from "@/models/common";
-import {
-  LoginRequest,
-  LoginResponse,
-  RefreshTokenRequest,
-  RefreshTokenResponse,
-  User,
-} from "@/models/auth";
+import { LoginRequest, LoginResponse, User } from "@/models/auth";
 
 class AuthService {
   /**
@@ -18,6 +12,7 @@ class AuthService {
     LOGIN: "/v1/authentication/login",
     REGISTER: "/v1/authentication/register",
     PING: "/v1/authentication/ping",
+    PROFILE: "/v1/authentication/profile",
   };
 
   /**
@@ -30,9 +25,9 @@ class AuthService {
     );
 
     if (response.isSuccess && response.data) {
-      // Store tokens and user data
+      // Store token and user data
       await tokenService.setTokens(response.data.accessToken);
-      //   await tokenService.setUser(response.data.user);
+      await tokenService.setUser(response.data.user);
     }
 
     return response;
@@ -53,17 +48,10 @@ class AuthService {
   }
 
   /**
-   * Refresh access token
-   * Note: API doesn't have a refresh-token endpoint yet.
-   * Currently just checks if token exists.
+   * Get current user profile
    */
-  async refreshToken(): Promise<ApiResponse<RefreshTokenResponse> | null> {
-    const refreshToken = await tokenService.getRefreshToken();
-    if (!refreshToken) {
-      return null;
-    }
-    // TODO: Implement when API supports refresh-token endpoint
-    return null;
+  async getProfile(): Promise<ApiResponse<User>> {
+    return api.get<ApiResponse<User>>(this.apiRoute.PROFILE);
   }
 
   /**

@@ -1,5 +1,11 @@
 import { useCallback, useState } from "react";
-import { View, FlatList, TouchableOpacity, RefreshControl } from "react-native";
+import {
+  View,
+  FlatList,
+  TouchableOpacity,
+  RefreshControl,
+  ScrollView,
+} from "react-native";
 import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
@@ -112,35 +118,40 @@ export default function ProductsScreen() {
   );
 
   return (
-    <View className="flex-1 bg-gray-50">
-      {isLoading && !refreshing ? (
-        <Loading />
-      ) : error ? (
-        <EmptyState
-          title="Không thể tải sản phẩm"
-          description={error}
-          icon="alert-circle-outline"
-          actionLabel="Thử lại"
-          onAction={refetch}
-        />
-      ) : (
-        <FlatList
-          data={products}
-          renderItem={renderProduct}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingVertical: 12 }}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-          }
-          ListEmptyComponent={
-            <EmptyState
-              title="Chưa có sản phẩm"
-              description={`Danh mục "${categoryName}" hiện chưa có sản phẩm nào`}
-              icon="cube-outline"
-            />
-          }
-        />
-      )}
-    </View>
+    <SafeArea>
+      <ScrollView className="flex-1 bg-gray-50">
+        {isLoading && !refreshing ? (
+          <Loading />
+        ) : error ? (
+          <EmptyState
+            title="Không thể tải sản phẩm"
+            description={error}
+            icon="alert-circle-outline"
+            actionLabel="Thử lại"
+            onAction={refetch}
+          />
+        ) : (
+          <FlatList
+            data={products}
+            renderItem={renderProduct}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={{ paddingVertical: 12 }}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={handleRefresh}
+              />
+            }
+            ListEmptyComponent={
+              <EmptyState
+                title="Chưa có sản phẩm"
+                description={`Danh mục "${categoryName}" hiện chưa có sản phẩm nào`}
+                icon="cube-outline"
+              />
+            }
+          />
+        )}
+      </ScrollView>
+    </SafeArea>
   );
 }

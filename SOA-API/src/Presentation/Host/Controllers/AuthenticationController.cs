@@ -1,5 +1,8 @@
 ﻿using Application.Features.Authentication.Commands;
+using Application.Features.Authentication.Queries;
 using Application.Models.Authentication.Request;
+using Application.Models.User.Response;
+using Application.Models.Common;
 using Asp.Versioning;
 using Host.Controllers.Base;
 using Microsoft.AspNetCore.Authorization;
@@ -43,6 +46,15 @@ namespace Host.Controllers
             var command = new RegisterCommand(request);
             var result = await Mediator.Send(command, cancellationToken);
             return Ok(result);
-        } 
+        }
+
+        [HttpGet("profile")]
+        [Authorize]
+        public async Task<IActionResult> GetProfileAsync(CancellationToken cancellationToken)
+        {
+            var query = new GetProfileQuery();
+            var result = await Mediator.Send(query, cancellationToken);
+            return Ok(result);
+        }
     }
 }

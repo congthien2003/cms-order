@@ -39,11 +39,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const isAuth = await authService.isAuthenticated();
       if (isAuth) {
-        const storedUser = await authService.getStoredUser();
-        setUser(storedUser);
+        // Fetch fresh user data from API
+        const profileResponse = await authService.getProfile();
+        if (profileResponse.isSuccess && profileResponse.data) {
+          setUser(profileResponse.data);
+          setIsAuthenticated(true);
+        } else {
+          // Token exists but profile fetch failed - clear auth
+          await authService.logout();
+          setIsAuthenticated(false);
+        }
+      } else {
+        setIsAuthenticated(false);
       }
     } catch (error) {
       console.error("Error checking auth:", error);
+      setIsAuthenticated(false);
     } finally {
       setIsLoading(false);
     }
@@ -55,7 +66,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const response = await authService.login({ email, password });
       if (response.isSuccess && response.data) {
         setIsAuthenticated(true);
-        // setUser(response.data.user);
+        setUser(response.data.user);
         return true;
       }
       return false;
@@ -72,6 +83,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsLoading(true);
       await authService.logout();
       setUser(null);
+      setIsAuthenticated(false);
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
@@ -80,14 +92,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const refreshUser = async () => {
-    // try {
-    // 	const response = await authService();
-    // 	if (response.isSuccess && response.data) {
-    // 		setUser(response.data);
-    // 	}
-    // } catch (error) {
-    // 	console.error("Error refreshing user:", error);
-    // }
+    try {
+      const response = await authService.getProfile();
+      if (response.isSuccess && response.data) {
+        setUser(response.data);
+      }
+    } catch (error) {
+      console.error("Error refreshing user:", error);
+    }
   };
 
   const value: AuthContextType = {

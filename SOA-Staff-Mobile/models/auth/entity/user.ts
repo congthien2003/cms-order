@@ -1,14 +1,16 @@
 /**
- * User entity
+ * User entity - matches API UserInfoResponse
  */
 export interface User {
-	id: string;
-	email: string;
-	fullName: string;
-	phoneNumber?: string;
-	avatar?: string;
-	role: string;
-	isActive: boolean;
-	createdAt: string;
-	updatedAt?: string;
+  id: string;
+  userName: string;
+  fullName: string;
+  email: string;
+  isEmailConfirmed: boolean;
+  phoneNumber?: string;
+  isPhoneNumberConfirmed?: boolean;
+  lastLoginAt?: string;
+  roles: string[];
+  profilePictureUrl?: string;
+  isActive: boolean;
 }
