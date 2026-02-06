@@ -1,6 +1,6 @@
 import React from "react";
-import { SafeAreaView, View, ViewProps } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { View, ViewProps } from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface SafeAreaProps extends ViewProps {
 	children: React.ReactNode;
