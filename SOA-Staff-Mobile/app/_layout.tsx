@@ -11,6 +11,7 @@ import "../global.css";
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { AuthProvider, useAuth } from "@/providers/authProvider";
+import HeaderScreen from "@/components/ui/header-screen";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -41,6 +42,7 @@ function RootNavigator() {
                 headerShown: true,
                 headerBackTitle: "Menu",
                 title: "Sản phẩm",
+                header: (props) => <HeaderScreen {...props} title="Sản phẩm" />,
               }}
             />
             <Stack.Screen

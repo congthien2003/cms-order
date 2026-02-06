@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Body, Caption, Label } from "@/components/ui/typography";
 import { useProducts } from "@/features/products";
 import { Product } from "@/models/product";
+import HeaderScreen from "@/components/ui/header-screen";
 
 const PLACEHOLDER_IMAGE =
   "https://via.placeholder.com/200x200.png?text=No+Image";
@@ -59,7 +60,7 @@ function ProductCard({
       />
       <View className="flex-1 p-3 justify-between">
         <View>
-          <Body className="font-semibold" numberOfLines={1}>
+          <Body className="font-semibold" numberOfLines={1} color="primary">
             {product.name}
           </Body>
           {product.description && (
@@ -119,7 +120,8 @@ export default function ProductsScreen() {
 
   return (
     <SafeArea>
-      <ScrollView className="flex-1 bg-gray-50">
+      <View className="flex-1 bg-gray-50">
+        <HeaderScreen title="Sản phẩm" />
         {isLoading && !refreshing ? (
           <Loading />
         ) : error ? (
@@ -151,7 +153,7 @@ export default function ProductsScreen() {
             }
           />
         )}
-      </ScrollView>
+      </View>
     </SafeArea>
   );
 }
