@@ -13,6 +13,7 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddIntegrations();
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.EssentialConfig(builder.Configuration);
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -43,6 +44,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<Host.Hubs.OrderHub>("/hubs/orders");
 
 app.UseCors("CorsPolicy");
 

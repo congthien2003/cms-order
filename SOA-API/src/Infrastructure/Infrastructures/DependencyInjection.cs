@@ -2,11 +2,13 @@
 using Application.Services.Interfaces.Infrastructure.Cache;
 using Application.Services.Interfaces.Infrastructure.Cloud;
 using Application.Services.Interfaces.Infrastructure.ImageOpimization;
+using Application.Services.Interfaces.Infrastructure.Notifications;
 using Domain.Repositories;
 using Infrastructures.Authentication;
 using Infrastructures.Repositories;
 using Infrastructures.Services.Cache.MemoryCache;
 using Infrastructures.Services.ImageOptimization;
+using Infrastructures.Services.Notifications;
 using Integrations.AzureBlob;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +35,8 @@ namespace Infrastructures
 
             services.AddScoped<IJwtManager, JwtManager>();
             services.AddScoped<IRepositoryManager, RepositoryManager>();
+
+            services.AddScoped<IOrderNotificationService, OrderNotificationService>();
 
             return services;
         }

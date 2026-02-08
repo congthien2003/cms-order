@@ -16,10 +16,14 @@ public record CreateOrderCommand(CreateOrderRequest Request) : IRequest<Result<O
 public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Result<OrderDetailResponse>>
 {
     private readonly IRepositoryManager _repositoryManager;
+    private readonly Services.Interfaces.Infrastructure.Notifications.IOrderNotificationService _orderNotificationService;
 
-    public CreateOrderCommandHandler(IRepositoryManager repositoryManager)
+    public CreateOrderCommandHandler(
+        IRepositoryManager repositoryManager,
+        Services.Interfaces.Infrastructure.Notifications.IOrderNotificationService orderNotificationService)
     {
         _repositoryManager = repositoryManager;
+        _orderNotificationService = orderNotificationService;
     }
 
     public async Task<Result<OrderDetailResponse>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -150,6 +154,9 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
 
         // 8. Build response
         var response = BuildOrderDetailResponse(order);
+
+        // 9. Notify admins about new order (real-time)
+        await _orderNotificationService.NotifyNewOrderAsync(response);
 
         return Result<OrderDetailResponse>.Success("Order created successfully", response);
     }

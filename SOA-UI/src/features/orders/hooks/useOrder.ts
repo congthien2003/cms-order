@@ -1,6 +1,8 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { orderService } from '@/services';
 import type { Order, OrderStatus } from '@/models/pos';
+import { ensureOrderHubConnected } from '@/lib/realtime/orderHubConnection';
+import { HubConnectionState } from '@microsoft/signalr';
 import type {
   ApiResponse,
   PagedList,
@@ -16,6 +18,7 @@ export const useOrder = () => {
   const [orders, setOrders] = useState<PagedList<Order> | null>(null);
   const [todayOrders, setTodayOrders] = useState<Order[]>([]);
   const [queueOrders, setQueueOrders] = useState<Order[]>([]);
+  const isHubInitialized = useRef(false);
   const [pagination, setPagination] = useState<PaginationParams>({
     page: 1,
     pageSize: 10,
@@ -113,10 +116,64 @@ export const useOrder = () => {
     [fetchOrders, fetchTodayOrders, fetchQueueOrders]
   );
 
-  // Initial fetch
+  // Initial fetch + SignalR realtime for queue
   useEffect(() => {
     fetchByTab(activeTab);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (isHubInitialized.current) return;
+    isHubInitialized.current = true;
+
+    let isCancelled = false;
+
+    const init = async () => {
+      try {
+        const conn = await ensureOrderHubConnected();
+
+        if (isCancelled) return;
+
+        conn.on('NewOrder', (newOrder: Order) => {
+          setQueueOrders((prev) => {
+            const exists = prev.some((o) => o.id === newOrder.id);
+            if (exists) return prev;
+
+            const merged = [...prev, newOrder].sort((a, b) => {
+              const aTime = new Date(a.createdAt).getTime();
+              const bTime = new Date(b.createdAt).getTime();
+              return aTime - bTime;
+            });
+
+            return merged;
+          });
+        });
+
+        conn.onreconnected(() => {
+          // Ensure group membership after reconnect
+          conn.invoke('JoinAdminsGroup').catch(() => undefined);
+        });
+      } catch {
+        // ignore
+      }
+    };
+
+    init();
+
+    return () => {
+      isCancelled = true;
+      const cleanup = async () => {
+        try {
+          const conn = await ensureOrderHubConnected();
+          if (conn.state === HubConnectionState.Connected) {
+            conn.off('NewOrder');
+          }
+        } catch {
+          // ignore
+        }
+      };
+      cleanup();
+    };
   }, []);
 
   // Handle tab change
