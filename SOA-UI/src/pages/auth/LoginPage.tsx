@@ -69,7 +69,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-white p-4 md:p-8">
       <div className="mx-auto grid w-full max-w-6xl items-center gap-8 md:grid-cols-2">
-        <section className="space-y-6">
+        <section className="order-2 space-y-6 md:order-1">
           <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-1 text-sm font-medium text-amber-700">
             <Coffee className="h-4 w-4" />
             CMS Order SaaS
@@ -93,7 +93,7 @@ export default function LoginPage() {
             </div>
           </div>
         </section>
-        <Card className="w-full max-w-md justify-self-center">
+        <Card className="order-1 w-full max-w-md justify-self-center md:order-2">
           <CardHeader className="text-center space-y-4">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-orange-600 text-white">
               <Coffee className="h-8 w-8" />
