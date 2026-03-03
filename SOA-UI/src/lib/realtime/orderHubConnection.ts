@@ -35,18 +35,19 @@ export function getOrderHubConnection() {
 
 export async function ensureOrderHubConnected() {
   const conn = getOrderHubConnection();
-  if (conn.state === HubConnectionState.Connected) return conn;
 
   if (conn.state === HubConnectionState.Disconnected) {
     await conn.start();
   }
 
-  if (conn.state === HubConnectionState.Connected) {
-    try {
-      await conn.invoke('JoinAdminsGroup');
-    } catch {
-      // ignore
-    }
+  if (conn.state !== HubConnectionState.Connected) {
+    return conn;
+  }
+
+  try {
+    await conn.invoke('JoinAdminsGroup');
+  } catch {
+    // ignore
   }
 
   return conn;

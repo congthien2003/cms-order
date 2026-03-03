@@ -140,8 +140,8 @@ export const useOrder = () => {
             if (exists) return prev;
 
             const merged = [...prev, newOrder].sort((a, b) => {
-              const aTime = new Date(a.createdAt).getTime();
-              const bTime = new Date(b.createdAt).getTime();
+              const aTime = new Date(a.createdAt || a.createdDate).getTime();
+              const bTime = new Date(b.createdAt || b.createdDate).getTime();
               return aTime - bTime;
             });
 

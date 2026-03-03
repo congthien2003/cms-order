@@ -32,7 +32,7 @@ namespace Infrastructures.Data
             // ============================================================
 
             // Option 1: Mayya Shop - Trà sữa, milo, hồng trà, lục trà, nhiều món lạ, nhiều topping
-            // await SeedMayyaShopAsync(context);
+            await SeedMayyaShopAsync(context);
 
             // Option 2: Hồng Trà Quán - Hồng trà, lục trà, một vài món trà sữa, nhiều topping
             // await SeedHongTraQuanAsync(context);
@@ -43,18 +43,6 @@ namespace Infrastructures.Data
             // ============================================================
             // DEFAULT SEED DATA (Original sample data)
             // ============================================================
-
-            // Seed Categories
-            await SeedCategoriesAsync(context);
-
-            // Seed Toppings
-            await SeedToppingsAsync(context);
-
-            // Seed Products with Sizes
-            await SeedProductsAsync(context);
-
-            // Seed Sample Vouchers
-            await SeedVouchersAsync(context);
 
             await context.SaveChangesAsync();
         }

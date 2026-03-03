@@ -15,11 +15,14 @@ import {
   ToggleRight,
   Copy,
   Calendar,
+  Eye,
 } from 'lucide-react';
 import type { Voucher } from '@/models/pos';
 import type { PagedList, PaginationParams } from '@/models/common/api';
 import Pagination from '@/components/ui/pagination/Pagination';
 import EmptyData from '@/components/ui/empty-data/empty-data';
+import { useState } from 'react';
+import { VoucherDetailDialog } from './VoucherDetailDialog';
 
 type VoucherTableProps = {
   vouchers: PagedList<Voucher> | null;
@@ -42,9 +45,17 @@ const VoucherTable = ({
   onCopyCode,
   formatDiscount,
 }: VoucherTableProps) => {
+  const [selectedVoucher, setSelectedVoucher] = useState<Voucher | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+
   if (!vouchers || vouchers.items.length === 0) {
     return <EmptyData />;
   }
+
+  const handleViewDetail = (voucher: Voucher) => {
+    setSelectedVoucher(voucher);
+    setIsDetailOpen(true);
+  };
 
   const pageSize = pagination.pageSize ?? 10;
   const page = pagination.page ?? 1;
@@ -110,6 +121,14 @@ const VoucherTable = ({
                   <Button
                     variant="ghost"
                     size="icon"
+                    onClick={() => handleViewDetail(voucher)}
+                    title="Xem chi tiết"
+                  >
+                    <Eye className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={() => onToggleStatus(voucher)}
                     title={voucher.isActive ? 'Vô hiệu hóa' : 'Kích hoạt'}
                   >
@@ -153,6 +172,12 @@ const VoucherTable = ({
           />
         </div>
       )}
+
+      <VoucherDetailDialog
+        voucher={selectedVoucher}
+        open={isDetailOpen}
+        onOpenChange={setIsDetailOpen}
+      />
     </div>
   );
 };

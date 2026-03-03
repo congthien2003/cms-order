@@ -1,7 +1,9 @@
 export { DashboardPage } from './dashboard';
 export { CategoriesPage } from './categories';
 export { ProductsPage } from './products';
+export { default as ProductDetailPage } from './products/id/ProductDetailPage';
 export { ToppingsPage } from './toppings';
 export { VouchersPage } from './vouchers';
 export { OrdersPage } from './orders';
+export { default as OrderDetailPage } from './orders/id/OrderDetailPage';
 export { SettingsPage } from './settings';

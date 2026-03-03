@@ -8,11 +8,13 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Pencil, Trash2, ToggleLeft, ToggleRight } from 'lucide-react';
+import { Pencil, Trash2, ToggleLeft, ToggleRight, Eye } from 'lucide-react';
 import type { Topping } from '@/models/pos';
 import type { PagedList, PaginationParams } from '@/models/common/api';
 import Pagination from '@/components/ui/pagination/Pagination';
 import EmptyData from '@/components/ui/empty-data/empty-data';
+import { useState } from 'react';
+import { ToppingDetailDialog } from './ToppingDetailDialog';
 
 type ToppingTableProps = {
   toppings: PagedList<Topping> | null;
@@ -31,9 +33,17 @@ const ToppingTable = ({
   onDelete,
   onToggleStatus,
 }: ToppingTableProps) => {
+  const [selectedTopping, setSelectedTopping] = useState<Topping | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+
   if (!toppings || toppings.items.length === 0) {
     return <EmptyData />;
   }
+
+  const handleViewDetail = (topping: Topping) => {
+    setSelectedTopping(topping);
+    setIsDetailOpen(true);
+  };
 
   const pageSize = pagination.pageSize ?? 10;
   const page = pagination.page ?? 1;
@@ -68,6 +78,14 @@ const ToppingTable = ({
               </TableCell>
               <TableCell className="text-right">
                 <div className="flex items-center justify-end gap-2">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleViewDetail(topping)}
+                    title="Xem chi tiết"
+                  >
+                    <Eye className="h-4 w-4" />
+                  </Button>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -114,6 +132,12 @@ const ToppingTable = ({
           />
         </div>
       )}
+
+      <ToppingDetailDialog
+        topping={selectedTopping}
+        open={isDetailOpen}
+        onOpenChange={setIsDetailOpen}
+      />
     </div>
   );
 };

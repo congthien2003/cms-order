@@ -3,7 +3,7 @@ using Application.Services.Interfaces.Infrastructure.Notifications;
 using Host.Hubs;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Infrastructures.Services.Notifications;
+namespace Host.Services.Notifications;
 
 public class OrderNotificationService : IOrderNotificationService
 {
@@ -16,7 +16,6 @@ public class OrderNotificationService : IOrderNotificationService
 
     public async Task NotifyNewOrderAsync(OrderDetailResponse order)
     {
-        // Broadcast to "Admins" group
         await _hubContext.Clients.Group("Admins").SendAsync("NewOrder", order);
     }
 }

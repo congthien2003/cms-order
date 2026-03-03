@@ -1,7 +1,7 @@
 // Environment configuration
 const ENV = {
   development: {
-    API_URL: "https://b6de-45-117-169-71.ngrok-free.app/api",
+    API_URL: "https://607f-2001-ee0-4fca-9620-7599-dc0-3015-477b.ngrok-free.app/api",
     SOCKET_URL: "http://localhost:5000",
   },
   staging: {
