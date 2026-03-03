@@ -1,28 +1,5 @@
 @import "tailwindcss";
 
-/* ─── Google Sans font loading ─────────────────────────────────────────── */
-@font-face {
-  font-family: 'Google Sans';
-  src: url('https://fonts.gstatic.com/s/googlesans/v58/4UaGrENHsxJlGDuGo1OIlL3Kwp5MKg.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Google Sans';
-  src: url('https://fonts.gstatic.com/s/googlesans/v58/4UabrENHsxJlGDuGo1OIlLU94YtzCwM.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Google Sans';
-  src: url('https://fonts.gstatic.com/s/googlesans/v58/4UabrENHsxJlGDuGo1OIlJty4ynbCwM.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* ─── Dark theme (default) ──────────────────────────────────────────────── */
 :root {
   --bg-dark: #0e0b08;
@@ -127,7 +104,7 @@ html {
 body {
   background: var(--bg-dark);
   color: var(--cream);
-  font-family: 'Google Sans Flex', 'Google Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Cascadia Code', 'Helvetica Neue', sans-serif;
   overflow-x: hidden;
   transition: background 0.3s ease, color 0.3s ease;
 }
