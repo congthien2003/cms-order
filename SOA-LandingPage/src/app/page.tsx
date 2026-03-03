@@ -128,8 +128,9 @@ export default function Home() {
             className="theme-toggle"
             onClick={() => setIsDark((d) => !d)}
             aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
           >
-            {isDark ? "☀️" : "🌙"}
+            <span aria-hidden="true">{isDark ? "☀️" : "🌙"}</span>
           </button>
 
           {/* CTA */}
