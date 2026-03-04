@@ -2,6 +2,7 @@
 using Application.Services.Interfaces.Infrastructure.Cache;
 using Application.Services.Interfaces.Infrastructure.Cloud;
 using Application.Services.Interfaces.Infrastructure.ImageOpimization;
+using Application.Services.Interfaces.Infrastructure.Notifications;
 using Domain.Repositories;
 using Infrastructures.Authentication;
 using Infrastructures.Repositories;

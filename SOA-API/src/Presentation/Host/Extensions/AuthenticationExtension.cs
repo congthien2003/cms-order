@@ -33,11 +33,23 @@ namespace Host.Extensions
                 {
                     OnMessageReceived = context =>
                     {
-                        var accessToken = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-                        if (!string.IsNullOrEmpty(accessToken))
+                        // Support SignalR access token via query string for WebSocket/SSE
+                        var path = context.HttpContext.Request.Path;
+                        var accessToken = context.Request.Query["access_token"].FirstOrDefault();
+
+                        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs/orders"))
                         {
                             context.Token = accessToken;
+                            return Task.CompletedTask;
                         }
+
+                        // Fallback: Authorization header
+                        var headerToken = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+                        if (!string.IsNullOrEmpty(headerToken))
+                        {
+                            context.Token = headerToken;
+                        }
+
                         return Task.CompletedTask;
                     }
                 };

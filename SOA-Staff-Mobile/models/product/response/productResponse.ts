@@ -13,8 +13,10 @@ export interface ProductListResponse {
  */
 export interface ProductDetailResponse extends Product {
 	availableToppings: {
-		id: string;
-		name: string;
+		toppingId: string;
+		toppingName: string;
 		price: number;
+		imageUrl: string;
+		isDefault: boolean;
 	}[];
 }

@@ -85,7 +85,7 @@ const OrderTable = ({
         key="view"
         variant="ghost"
         size="icon"
-        onClick={() => navigate(`/pos/orders/${order.id}`)}
+        onClick={() => navigate(`/orders/${order.id}`)}
         title="Xem chi tiết"
       >
         <Eye className="h-4 w-4" />

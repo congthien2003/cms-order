@@ -13,8 +13,10 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddIntegrations();
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.EssentialConfig(builder.Configuration);
+builder.Services.AddScoped<Application.Services.Interfaces.Infrastructure.Notifications.IOrderNotificationService, Host.Services.Notifications.OrderNotificationService>();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Host.UseSerilog();
 
@@ -44,12 +46,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapHub<Host.Hubs.OrderHub>("/hubs/orders");
+
 app.UseCors("CorsPolicy");
 
 app.MapGet("/", () => Results.LocalRedirect("/swagger/index.html"));
 
 // Initialize database with seed data
-//await app.InitializeDatabaseAsync();
+await app.InitializeDatabaseAsync();
 
 try
 {

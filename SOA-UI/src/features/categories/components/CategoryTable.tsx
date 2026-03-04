@@ -8,11 +8,13 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Pencil, Trash2, ToggleLeft, ToggleRight } from 'lucide-react';
+import { Pencil, Trash2, ToggleLeft, ToggleRight, Eye } from 'lucide-react';
 import type { Category } from '@/models/pos';
 import type { PagedList, PaginationParams } from '@/models/common/api';
 import Pagination from '@/components/ui/pagination/Pagination';
 import EmptyData from '@/components/ui/empty-data/empty-data';
+import { CategoryDetailDialog } from './CategoryDetailDialog';
+import { useState } from 'react';
 
 type CategoryTableProps = {
   categories: PagedList<Category> | null;
@@ -31,9 +33,17 @@ const CategoryTable = ({
   onDelete,
   onToggleStatus,
 }: CategoryTableProps) => {
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+
   if (!categories || categories.items.length === 0) {
     return <EmptyData />;
   }
+
+  const handleViewDetail = (category: Category) => {
+    setSelectedCategory(category);
+    setIsDetailOpen(true);
+  };
 
   const pageSize = pagination.pageSize ?? 10;
   const page = pagination.page ?? 1;
@@ -72,6 +82,14 @@ const CategoryTable = ({
               </TableCell>
               <TableCell className="text-right">
                 <div className="flex items-center justify-end gap-2">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleViewDetail(category)}
+                    title="Xem chi tiết"
+                  >
+                    <Eye className="h-4 w-4" />
+                  </Button>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -118,6 +136,12 @@ const CategoryTable = ({
           />
         </div>
       )}
+
+      <CategoryDetailDialog
+        category={selectedCategory}
+        open={isDetailOpen}
+        onOpenChange={setIsDetailOpen}
+      />
     </div>
   );
 };

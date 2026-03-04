@@ -151,6 +151,8 @@ export default function ProductDetailScreen() {
     router,
   ]);
 
+  console.log(product?.availableToppings);
+
   if (isLoading) {
     return (
       <SafeArea>
@@ -230,15 +232,13 @@ export default function ProductDetailScreen() {
                       <TouchableOpacity
                         key={size.id}
                         onPress={() => setSelectedSize(size)}
-                        className={`px-4 py-2.5 rounded-lg border ${
-                          isSelected
-                            ? "bg-primary-600 border-primary-600"
-                            : "bg-white border-gray-300"
-                        }`}>
-                        <Body
-                          className={`font-medium ${
-                            isSelected ? "text-white" : "text-gray-700"
+                        className={`px-4 py-2.5 rounded-lg border ${isSelected
+                          ? "bg-primary-600 border-primary-600"
+                          : "bg-white border-gray-300"
                           }`}>
+                        <Body
+                          className={`font-medium ${isSelected ? "text-white" : "text-gray-700"
+                            }`}>
                           {size.name}
                         </Body>
                         <Caption
@@ -260,26 +260,24 @@ export default function ProductDetailScreen() {
                 <View className="mb-4">
                   <Label className="mb-2 font-semibold">Topping</Label>
                   <View className="gap-2">
-                    {product.availableToppings.map((topping) => {
+                    {product.availableToppings.map((topping, index) => {
                       const selected = selectedToppings.find(
-                        (t) => t.id === topping.id,
+                        (t) => t.id === topping.toppingId,
                       );
                       return (
                         <TouchableOpacity
-                          key={topping.id}
-                          onPress={() => toggleTopping(topping)}
-                          className={`flex-row items-center justify-between p-3 rounded-lg border ${
-                            selected
-                              ? "border-primary-500 bg-primary-50"
-                              : "border-gray-200 bg-white"
-                          }`}>
+                          key={index}
+                          onPress={() => toggleTopping({ id: topping.toppingId, name: topping.toppingName, price: topping.price })}
+                          className={`flex-row items-center justify-between p-3 rounded-lg border ${selected
+                            ? "border-primary-500 bg-primary-50"
+                            : "border-gray-200 bg-white"
+                            }`}>
                           <View className="flex-row items-center flex-1">
                             <View
-                              className={`w-5 h-5 rounded border mr-3 items-center justify-center ${
-                                selected
-                                  ? "bg-primary-600 border-primary-600"
-                                  : "border-gray-300"
-                              }`}>
+                              className={`w-5 h-5 rounded border mr-3 items-center justify-center ${selected
+                                ? "bg-primary-600 border-primary-600"
+                                : "border-gray-300"
+                                }`}>
                               {selected && (
                                 <Ionicons
                                   name="checkmark"
@@ -288,7 +286,7 @@ export default function ProductDetailScreen() {
                                 />
                               )}
                             </View>
-                            <Body>{topping.name}</Body>
+                            <Body className="text-gray-700">{topping.toppingName}</Body>
                           </View>
                           <View className="flex-row items-center gap-3">
                             <Caption className="text-gray-600">
@@ -298,7 +296,7 @@ export default function ProductDetailScreen() {
                               <QuantityInput
                                 value={selected.quantity}
                                 onChange={(qty) =>
-                                  updateToppingQuantity(topping.id, qty)
+                                  updateToppingQuantity(topping.toppingId, qty)
                                 }
                                 min={1}
                                 max={10}

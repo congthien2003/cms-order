@@ -6,9 +6,11 @@ import {
   DashboardPage,
   CategoriesPage,
   ProductsPage,
+  ProductDetailPage,
   ToppingsPage,
   VouchersPage,
   OrdersPage,
+  OrderDetailPage,
   SettingsPage,
 } from '@/pages/pos';
 
@@ -28,7 +30,9 @@ const router = createBrowserRouter([
       { index: true, element: <Navigate to="/dashboard" replace /> },
       { path: 'dashboard', element: <DashboardPage /> },
       { path: 'orders', element: <OrdersPage /> },
+      { path: 'orders/:id', element: <OrderDetailPage /> },
       { path: 'products', element: <ProductsPage /> },
+      { path: 'products/:id', element: <ProductDetailPage /> },
       { path: 'categories', element: <CategoriesPage /> },
       { path: 'toppings', element: <ToppingsPage /> },
       { path: 'vouchers', element: <VouchersPage /> },

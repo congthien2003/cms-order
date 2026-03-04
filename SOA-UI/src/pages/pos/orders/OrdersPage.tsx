@@ -31,6 +31,7 @@ export default function OrdersPage() {
     pagination,
     statusFilter,
     activeTab,
+    fetchQueueOrders,
     handleTabChange,
     handlePageChange,
     handleSearch,
@@ -69,7 +70,16 @@ export default function OrdersPage() {
           <TabsContent value="queue">
             <Card>
               <CardHeader>
-                <CardTitle>Đơn hàng đang xử lý</CardTitle>
+                <div className="flex items-center justify-between gap-4">
+                  <CardTitle>Đơn hàng đang xử lý</CardTitle>
+                  <button
+                    type="button"
+                    className="text-sm text-primary underline-offset-4 hover:underline"
+                    onClick={() => fetchQueueOrders()}
+                  >
+                    Refresh
+                  </button>
+                </div>
               </CardHeader>
               <CardContent>
                 {loading ? (
