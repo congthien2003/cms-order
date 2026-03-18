@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Management Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2beead",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#10221c",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen w-full flex-col max-w-[480px] mx-auto bg-white dark:bg-slate-900 shadow-xl overflow-x-hidden">
+<!-- Header -->
+<div class="flex items-center bg-white dark:bg-slate-900 p-4 pb-2 justify-between sticky top-0 z-10 border-b border-slate-100 dark:border-slate-800">
+<div class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined">menu</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 px-2">Order Management</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="flex cursor-pointer items-center justify-center rounded-lg h-10 w-10 bg-transparent text-slate-900 dark:text-slate-100 p-0">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+<!-- Search Bar -->
+<div class="px-4 py-3 bg-white dark:bg-slate-900">
+<label class="flex flex-col min-w-40 h-12 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full bg-slate-100 dark:bg-slate-800">
+<div class="text-slate-500 dark:text-slate-400 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-slate-900 dark:text-slate-100 focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-slate-500 px-4 pl-2 text-base font-normal" placeholder="Search by Order ID or customer" value=""/>
+</div>
+</label>
+</div>
+<!-- Segmented Filter -->
+<div class="flex px-4 py-3 bg-white dark:bg-slate-900">
+<div class="flex h-11 flex-1 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-700 has-[:checked]:shadow-sm has-[:checked]:text-primary text-slate-500 dark:text-slate-400 text-sm font-semibold">
+<span class="truncate">Pending</span>
+<input checked="" class="invisible w-0" name="order-status" type="radio" value="Pending"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-700 has-[:checked]:shadow-sm has-[:checked]:text-primary text-slate-500 dark:text-slate-400 text-sm font-semibold">
+<span class="truncate">Preparing</span>
+<input class="invisible w-0" name="order-status" type="radio" value="Preparing"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-700 has-[:checked]:shadow-sm has-[:checked]:text-primary text-slate-500 dark:text-slate-400 text-sm font-semibold">
+<span class="truncate">Completed</span>
+<input class="invisible w-0" name="order-status" type="radio" value="Completed"/>
+</label>
+</div>
+</div>
+<!-- Order List -->
+<div class="flex-1 overflow-y-auto p-4 space-y-4 bg-background-light dark:bg-background-dark">
+<!-- Order Card 1 (Pending) -->
+<div class="flex flex-col rounded-xl shadow-sm bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 overflow-hidden">
+<div class="p-4 border-b border-slate-50 dark:border-slate-700 flex justify-between items-start">
+<div>
+<p class="text-slate-900 dark:text-white text-lg font-bold tracking-tight">Order #BT-8829</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Customer: John Doe (Table 4)</p>
+</div>
+<span class="bg-primary/20 text-primary text-[10px] uppercase font-bold px-2 py-1 rounded-full">Pending</span>
+</div>
+<div class="p-4">
+<div class="flex gap-3 mb-4">
+<div class="size-16 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center flex-shrink-0" data-alt="Thumbnail of bubble tea order items" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDNfqz-Jdszedsj0BYOZh4WnVKfVgT7AnxnuZMOlswXkpw2Pd53w9sktMVeBEaY5xFpCbFadQYBeK04_C0IytqTv4_gxDnBLBGP0VHeWs9M7KA8j1n8lBft9Flgfj4RRshiH46ecYMFLgSkDf-j-4kZ1jB0pTdq6jLIZxI7OMB0lIuBdjNKEs2kKQzaRqm1aDw7h9Paw8B6YkpF4czp4oOZwwY6Fhq6JClz2k6_O72H-eg7QaWKQajnIK_foULMxcVo16Eurvo3Wss');">
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-tight">2x Brown Sugar Pearl Milk Tea, 1x Taro Milk</p>
+<p class="text-slate-400 dark:text-slate-500 text-xs mt-1">Today, 10:45 AM</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2">
+<p class="text-slate-900 dark:text-white text-lg font-bold">$18.50</p>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-9 px-4 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 text-sm font-semibold">
+                                Edit
+                            </button>
+<button class="flex items-center justify-center rounded-lg h-9 px-4 bg-slate-100 dark:bg-slate-700 text-red-500 text-sm font-semibold">
+                                Void
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Card 2 (Preparing) -->
+<div class="flex flex-col rounded-xl shadow-sm bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 overflow-hidden">
+<div class="p-4 border-b border-slate-50 dark:border-slate-700 flex justify-between items-start">
+<div>
+<p class="text-slate-900 dark:text-white text-lg font-bold tracking-tight">Order #BT-8830</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Customer: Sarah Smith (Takeaway)</p>
+</div>
+<span class="bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 text-[10px] uppercase font-bold px-2 py-1 rounded-full">Preparing</span>
+</div>
+<div class="p-4">
+<div class="flex gap-3 mb-4">
+<div class="size-16 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center flex-shrink-0" data-alt="Bubble tea drink icons for preparing order" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDRB0SP5tBaH02on7cX36w1uQbwuasJEW4XR2Ma_YYdzxLUQnD3hwbe7RH49bvKtSiJOMZpXWpivelnZK-Lob6qSjuOTlIfEgrsOMjlkTJ-7l2Fv47NfY9R_VipKxeCRspso4ydedJPx1fFLJDze8NKf559VZ5ICEUSYB4q8CND1cqupH6M4ChpqWPx_etKvLNIRLokJxlYHpTCp_wu7Zsh4TPjrmI81yuGO2fVgCBzQn0iUsuHtnYN-XUx2c0W-5OsH_HN8tPoUlk');">
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-tight">1x Matcha Red Bean Slush, 1x Passion Fruit Green Tea</p>
+<p class="text-slate-400 dark:text-slate-500 text-xs mt-1">Today, 10:52 AM</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2">
+<p class="text-slate-900 dark:text-white text-lg font-bold">$12.40</p>
+<button class="flex-1 ml-4 flex items-center justify-center rounded-lg h-10 bg-primary text-slate-900 text-sm font-bold shadow-sm">
+                            Mark as Ready
+                        </button>
+</div>
+</div>
+</div>
+<!-- Order Card 3 (Preparing) -->
+<div class="flex flex-col rounded-xl shadow-sm bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 overflow-hidden opacity-90">
+<div class="p-4 border-b border-slate-50 dark:border-slate-700 flex justify-between items-start">
+<div>
+<p class="text-slate-900 dark:text-white text-lg font-bold tracking-tight">Order #BT-8831</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Customer: Mike Ross (Table 2)</p>
+</div>
+<span class="bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 text-[10px] uppercase font-bold px-2 py-1 rounded-full">Preparing</span>
+</div>
+<div class="p-4">
+<p class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-tight mb-4">3x Signature Milk Tea (Large, 50% Sugar)</p>
+<div class="flex items-center justify-between mt-2">
+<p class="text-slate-900 dark:text-white text-lg font-bold">$16.50</p>
+<button class="flex-1 ml-4 flex items-center justify-center rounded-lg h-10 bg-primary text-slate-900 text-sm font-bold shadow-sm">
+                            Mark as Ready
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<div class="flex gap-2 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pb-6 pt-3">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<div class="flex h-6 items-center justify-center">
+<span class="material-symbols-outlined fill-1">receipt_long</span>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-wider">Orders</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-6 items-center justify-center">
+<span class="material-symbols-outlined">point_of_sale</span>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-wider">POS</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-6 items-center justify-center">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-wider">Inventory</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-6 items-center justify-center">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-wider">Settings</p>
+</a>
+</div>
+</div>
+</body></html>

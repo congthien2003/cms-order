@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Product Customization Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2beead",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#10221c",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden max-w-[430px] mx-auto shadow-2xl">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-10 flex items-center bg-white dark:bg-slate-900 p-4 border-b border-slate-200 dark:border-slate-800 justify-between">
+<div class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined">close</span>
+</div>
+<div class="flex flex-col items-center">
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">Classic Milk Tea</h2>
+<p class="text-xs text-slate-500 dark:text-slate-400">Customizing Item</p>
+</div>
+<div class="flex size-10 items-center justify-end cursor-pointer">
+<p class="text-primary text-sm font-bold leading-normal tracking-wide">Reset</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto pb-32">
+<!-- Product Preview Header -->
+<div class="px-4 py-6 flex items-center gap-4 bg-white dark:bg-slate-900 mb-2">
+<div class="size-20 rounded-xl bg-primary/10 flex items-center justify-center">
+<img alt="Bubble Tea Cup" class="size-16 object-contain" data-alt="A refreshing cup of bubble tea with pearls" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0qSwuGw2oFOrNJGjIn5pzPp1Wsiu2kPvJyMpUpNYTSx3f38wrdITCNNc-Ik4n8qLpndELuBFbix9uz8-7mHRw9kNWP5PNNoir-HVh3U0YWdnaAqvCIAbwKojFXD3qXsHzySMYKWeAvLywropL4iUexMP6NLQA0YKNrNn016Ub4dgs1ZSE-MhFOtdShOaQqhMNESs1B5Pn1TAR43YcvDeYOBp9517vyi2s5Y1QhqfJSIG6G3KXxtvfyhfVjpj42OwrwqV9hyFa8q8"/>
+</div>
+<div>
+<h3 class="font-bold text-xl text-slate-900 dark:text-slate-100">$5.50</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Base Price • Standard Size</p>
+</div>
+</div>
+<!-- Ice Level Selection -->
+<div class="bg-white dark:bg-slate-900 px-4 py-4 mb-2">
+<h3 class="text-slate-900 dark:text-slate-100 text-base font-bold mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">ac_unit</span>
+                    Ice Level
+                </h3>
+<div class="flex h-11 w-full items-center justify-center rounded-xl bg-background-light dark:bg-slate-800 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-700 has-[:checked]:shadow-sm has-[:checked]:text-primary text-slate-500 dark:text-slate-400 text-sm font-semibold transition-all">
+<span class="truncate">0%</span>
+<input class="hidden" name="ice-level" type="radio" value="0"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-700 has-[:checked]:shadow-sm has-[:checked]:text-primary text-slate-500 dark:text-slate-400 text-sm font-semibold transition-all">
+<span class="truncate">50%</span>
+<input checked="" class="hidden" name="ice-level" type="radio" value="50"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-700 has-[:checked]:shadow-sm has-[:checked]:text-primary text-slate-500 dark:text-slate-400 text-sm font-semibold transition-all">
+<span class="truncate">100%</span>
+<input class="hidden" name="ice-level" type="radio" value="100"/>
+</label>
+</div>
+</div>
+<!-- Sugar Level Selection -->
+<div class="bg-white dark:bg-slate-900 px-4 py-4 mb-2">
+<h3 class="text-slate-900 dark:text-slate-100 text-base font-bold mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">water_drop</span>
+                    Sugar Level
+                </h3>
+<div class="flex h-11 w-full items-center justify-center rounded-xl bg-background-light dark:bg-slate-800 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-700 has-[:checked]:shadow-sm has-[:checked]:text-primary text-slate-500 dark:text-slate-400 text-sm font-semibold transition-all">
+<span class="truncate">0%</span>
+<input class="hidden" name="sugar-level" type="radio" value="0"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-700 has-[:checked]:shadow-sm has-[:checked]:text-primary text-slate-500 dark:text-slate-400 text-sm font-semibold transition-all">
+<span class="truncate">25%</span>
+<input class="hidden" name="sugar-level" type="radio" value="25"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-700 has-[:checked]:shadow-sm has-[:checked]:text-primary text-slate-500 dark:text-slate-400 text-sm font-semibold transition-all">
+<span class="truncate">50%</span>
+<input class="hidden" name="sugar-level" type="radio" value="50"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-700 has-[:checked]:shadow-sm has-[:checked]:text-primary text-slate-500 dark:text-slate-400 text-sm font-semibold transition-all">
+<span class="truncate">100%</span>
+<input checked="" class="hidden" name="sugar-level" type="radio" value="100"/>
+</label>
+</div>
+</div>
+<!-- Toppings Selection -->
+<div class="bg-white dark:bg-slate-900 px-4 py-4 mb-2">
+<div class="flex justify-between items-center mb-3">
+<h3 class="text-slate-900 dark:text-slate-100 text-base font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">add_circle</span>
+                        Toppings
+                    </h3>
+<span class="text-xs text-slate-400 font-medium">Optional</span>
+</div>
+<div class="space-y-3">
+<!-- Topping Item 1 -->
+<label class="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 bg-background-light/50 dark:bg-slate-800/50 cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-white dark:bg-slate-700 flex items-center justify-center overflow-hidden">
+<img alt="Tapioca Pearls" class="size-8 object-cover" data-alt="Round black tapioca pearls for bubble tea" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7dJQR2FiU259H6Lv1nSFBtzvmdr6F4Oztb9jcAVwZFh2ccOT9N9Jdj1aEz2HW4jxJN3hXUhoRaZDvTLrcmX1k_Bv7BWR7yKORffSnJ8_uzNhPUNUC18xEWcXAp1n-tM50K5TV_zNS2fbTcPS2tSPfqhTtAttFa2q59iF7xvTIyeYSKIfLsMvfzTdKKQuevCfaBosAGxk3smLbeyGtWJpIpSNaRSuY-VkDg9Fo4H3WgJ2azRZJrzKi9tsOzb2p9e6DZ57Uixn43T4"/>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Tapioca Pearls</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">+$0.75</p>
+</div>
+</div>
+<input class="size-6 rounded-full border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<!-- Topping Item 2 -->
+<label class="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 bg-background-light/50 dark:bg-slate-800/50 cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-white dark:bg-slate-700 flex items-center justify-center overflow-hidden">
+<img alt="Lychee Jelly" class="size-8 object-cover" data-alt="Small translucent cubes of fruit jelly" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0KSBI_JByH761DylrK_Jfu3cLaRxhcUpXYAtG4Z1aTO-S_dsb6PweHeL2eWTBH8Gr3JB7dE7OLLUSfbhuv-TPVnYNIYjaZravBfnX1HLlmnt56vyEtMhbfTObPmHwplNSAftB_g5otPQd5baAFAZTs_OlDY8jtFxVf5-EQagl-Nd3MsYxt-hn5TJc73ez2A6OoiwOVqK1HZIeplzkFyMYM-G_trglDCpJUiiJzF2ngZJsXJIhaASTB3mH2n6OcZ1Lym95HUaxY4c"/>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Lychee Jelly</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">+$0.50</p>
+</div>
+</div>
+<input checked="" class="size-6 rounded-full border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<!-- Topping Item 3 -->
+<label class="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 bg-background-light/50 dark:bg-slate-800/50 cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-white dark:bg-slate-700 flex items-center justify-center overflow-hidden">
+<img alt="Custard Pudding" class="size-8 object-cover" data-alt="Yellow custard pudding dessert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8EOTZNfWC4Nn8d5wNaGMGIJpL4JfEXyOLCh_PtTle3lZAGHAeEJitbH2tZjEdLoT3zaJZI26aHh8IxCeM4atJtFfwtr9eg_bUELDC9hAdORnWBSDtgBkHt2iJ2N2f3EGWrlfzSEyvTSgRSgZfDE3OyaUPpCvK6zBFCvmTSdSBA1Y1XoEyVWvzAMk5Ud_uhIswXxdl_Vb1H1J77cAMKAszNsZdlznT39Ai9gRWeFT7oEZuvzaRjwYUzgwQ_qDAZGlZjfECPlsZPdY"/>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Custard Pudding</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">+$1.00</p>
+</div>
+</div>
+<input class="size-6 rounded-full border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Notes Field -->
+<div class="bg-white dark:bg-slate-900 px-4 py-4 mb-10">
+<h3 class="text-slate-900 dark:text-slate-100 text-base font-bold mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">notes</span>
+                    Special Instructions
+                </h3>
+<textarea class="w-full rounded-xl border-slate-200 dark:border-slate-800 bg-background-light dark:bg-slate-800 focus:border-primary focus:ring-primary text-sm p-4 placeholder:text-slate-400" placeholder="e.g. Extra hot, separate pearls in a small cup..." rows="3"></textarea>
+</div>
+</div>
+<!-- Bottom Action Bar -->
+<div class="fixed bottom-0 left-0 right-0 p-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 max-w-[430px] mx-auto">
+<div class="flex items-center gap-4 mb-4">
+<div class="flex items-center bg-background-light dark:bg-slate-800 rounded-full p-1 h-12">
+<button class="size-10 rounded-full flex items-center justify-center text-slate-900 dark:text-slate-100 hover:bg-white dark:hover:bg-slate-700">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="px-4 font-bold text-lg">1</span>
+<button class="size-10 rounded-full flex items-center justify-center text-slate-900 dark:text-slate-100 hover:bg-white dark:hover:bg-slate-700">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<div class="flex-1">
+<p class="text-xs text-slate-500 dark:text-slate-400">Subtotal</p>
+<p class="text-lg font-bold text-slate-900 dark:text-slate-100">$6.00</p>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-slate-900 font-bold py-4 rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+<span>Confirm &amp; Add to Order</span>
+<span class="material-symbols-outlined">shopping_basket</span>
+</button>
+</div>
+</div>
+</body></html>

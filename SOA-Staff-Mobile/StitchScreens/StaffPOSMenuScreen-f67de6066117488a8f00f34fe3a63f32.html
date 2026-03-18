@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Management with Printing</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2beead",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#10221c",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen w-full flex-col max-w-[430px] mx-auto bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
+<div class="flex items-center bg-white dark:bg-slate-900 p-4 pb-2 justify-between sticky top-0 z-20 border-b border-slate-100 dark:border-slate-800">
+<div class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined">menu</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Active Orders</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="flex cursor-pointer items-center justify-center rounded-lg h-10 bg-transparent text-slate-900 dark:text-slate-100">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+</div>
+</div>
+<div class="flex gap-2 p-3 overflow-x-auto no-scrollbar whitespace-nowrap bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary px-4 text-slate-900">
+<p class="text-sm font-bold">In Progress (8)</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-100 dark:bg-slate-800 px-4 text-slate-600 dark:text-slate-300">
+<p class="text-sm font-medium">Ready (3)</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-100 dark:bg-slate-800 px-4 text-slate-600 dark:text-slate-300">
+<p class="text-sm font-medium">Completed</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-4 space-y-4 pb-24">
+<div class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="p-4 border-b border-slate-50 dark:border-slate-700/50 flex justify-between items-start">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Order #BT-8821</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700 uppercase">Preparing</span>
+</div>
+<p class="text-slate-900 dark:text-slate-100 font-bold mt-1">James Wilson</p>
+</div>
+<div class="text-right">
+<p class="text-xs text-slate-500">12:45 PM</p>
+<p class="text-xs font-bold text-primary mt-1">3 Items</p>
+</div>
+</div>
+<div class="p-4 bg-slate-50/50 dark:bg-slate-800/50">
+<ul class="space-y-2">
+<li class="text-sm text-slate-700 dark:text-slate-300 flex justify-between">
+<span>1x Brown Sugar Milk (Large, 50% Ice)</span>
+</li>
+<li class="text-sm text-slate-700 dark:text-slate-300 flex justify-between">
+<span>1x Matcha Cream Latte (Cheese Foam)</span>
+</li>
+<li class="text-sm text-slate-700 dark:text-slate-300 flex justify-between">
+<span>1x Honey Boba Topping</span>
+</li>
+</ul>
+</div>
+<div class="p-4 grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-sm font-bold active:bg-slate-100 dark:active:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-lg">print</span>
+                        Print Receipt
+                    </button>
+<button class="bg-primary text-slate-900 py-2.5 px-4 rounded-xl text-sm font-bold active:scale-[0.98] transition-transform">
+                        Mark Ready
+                    </button>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="p-4 border-b border-slate-50 dark:border-slate-700/50 flex justify-between items-start">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Order #BT-8822</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700 uppercase">Preparing</span>
+</div>
+<p class="text-slate-900 dark:text-slate-100 font-bold mt-1">Sarah Chen</p>
+</div>
+<div class="text-right">
+<p class="text-xs text-slate-500">12:48 PM</p>
+<p class="text-xs font-bold text-primary mt-1">1 Item</p>
+</div>
+</div>
+<div class="p-4 bg-slate-50/50 dark:bg-slate-800/50">
+<ul class="space-y-2">
+<li class="text-sm text-slate-700 dark:text-slate-300 flex justify-between">
+<span>1x Signature Fruit Tea (Less Sugar)</span>
+</li>
+</ul>
+</div>
+<div class="p-4 grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-sm font-bold active:bg-slate-100 dark:active:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-lg">print</span>
+                        Print Receipt
+                    </button>
+<button class="bg-primary text-slate-900 py-2.5 px-4 rounded-xl text-sm font-bold active:scale-[0.98] transition-transform">
+                        Mark Ready
+                    </button>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="p-4 border-b border-slate-50 dark:border-slate-700/50 flex justify-between items-start">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Order #BT-8823</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 uppercase">Pending</span>
+</div>
+<p class="text-slate-900 dark:text-slate-100 font-bold mt-1">Michael R.</p>
+</div>
+<div class="text-right">
+<p class="text-xs text-slate-500">12:52 PM</p>
+<p class="text-xs font-bold text-primary mt-1">2 Items</p>
+</div>
+</div>
+<div class="p-4 bg-slate-50/50 dark:bg-slate-800/50">
+<ul class="space-y-2">
+<li class="text-sm text-slate-700 dark:text-slate-300 flex justify-between">
+<span>2x Fresh Taro Milk (No Ice)</span>
+</li>
+</ul>
+</div>
+<div class="p-4 grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-sm font-bold active:bg-slate-100 dark:active:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-lg">print</span>
+                        Print Receipt
+                    </button>
+<button class="bg-primary text-slate-900 py-2.5 px-4 rounded-xl text-sm font-bold active:scale-[0.98] transition-transform">
+                        Start Order
+                    </button>
+</div>
+</div>
+</div>
+<div class="flex gap-2 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pb-4 pt-2 sticky bottom-0 z-20">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">coffee</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Menu</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+</div>
+<p class="text-xs font-bold leading-normal tracking-[0.015em]">Orders</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Inventory</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Settings</p>
+</a>
+</div>
+</div>
+
+</body></html>

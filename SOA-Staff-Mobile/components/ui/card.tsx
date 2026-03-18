@@ -21,13 +21,13 @@ interface PressableCardProps extends TouchableOpacityProps {
 const getVariantStyles = (variant: CardProps["variant"]) => {
 	switch (variant) {
 		case "elevated":
-			return "bg-white shadow-md shadow-black/10";
+			return "bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700";
 		case "outlined":
-			return "bg-white border border-secondary-200";
+			return "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800";
 		case "filled":
-			return "bg-secondary-50";
+			return "bg-slate-50 dark:bg-slate-900";
 		default:
-			return "bg-white shadow-sm shadow-black/5";
+			return "bg-white dark:bg-slate-800 shadow-sm shadow-black/5";
 	}
 };
 
@@ -77,7 +77,7 @@ export const PressableCard: React.FC<PressableCardProps> = ({
 
 	return (
 		<TouchableOpacity
-			className={`rounded-xl ${variantStyles} ${paddingStyles} active:opacity-80 ${className || ""}`}
+			className={`rounded-xl overflow-hidden ${variantStyles} ${paddingStyles} active:opacity-80 active:scale-[0.98] transition-transform ${className || ""}`}
 			{...props}>
 			{children}
 		</TouchableOpacity>

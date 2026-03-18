@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Review and Checkout</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2beead",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#10221c",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex h-auto min-h-screen w-full flex-col max-w-[430px] mx-auto bg-white dark:bg-background-dark shadow-xl overflow-x-hidden">
+<div class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-slate-100 dark:border-slate-800">
+<div class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center">Review Order</h2>
+<div class="size-10 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-400">more_horiz</span>
+</div>
+</div>
+<div class="bg-white dark:bg-background-dark">
+<div class="flex border-b border-slate-100 dark:border-slate-800 px-4 justify-between">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-primary text-slate-900 dark:text-slate-100 pb-[13px] pt-4 flex-1" href="#">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">restaurant</span>
+<p class="text-sm font-bold leading-normal tracking-wide">Dine-in</p>
+</div>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-transparent text-slate-400 pb-[13px] pt-4 flex-1" href="#">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">shopping_bag</span>
+<p class="text-sm font-bold leading-normal tracking-wide">Takeaway</p>
+</div>
+</a>
+</div>
+</div>
+<div class="p-4 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">Order Items</h3>
+<span class="text-primary text-sm font-semibold">3 Items</span>
+</div>
+</div>
+<div class="flex flex-col divide-y divide-slate-50 dark:divide-slate-800">
+<div class="flex gap-4 bg-white dark:bg-background-dark px-4 py-4 justify-between">
+<div class="flex items-start gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl size-[80px] shadow-sm" data-alt="Classic milk tea with boba pearls" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBxe5TBR0lZCOInW5uoY_GiRAwM-DHSz9qHb9vAX3jVwVDYJkFhP-Eg7BC6ixcDYxBpnKMrWM8TMfOihnPSetSX--KOMb3NG_19NlJIJnNXPiXi47I033DFsoCqI0FNzg0zI9chkWbgFpJl0i9m3u2STyPGylSes1oQqJqOUjM5-Z2b4PuhsV3zHRNrQoHaiapivCay7uv9Opxw8Z-67GrJ48ZGKkpyOFm-HtYotJtIFjMCGUpFJhR8TXSB9XXifEY4gsMMsLKV_fY");'></div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-slate-900 dark:text-slate-100 text-base font-bold leading-normal">Classic Milk Tea</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium leading-normal mt-0.5">+ Tapioca Pearls</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal leading-normal italic">Large, 50% Sugar, Less Ice</p>
+<p class="text-primary text-sm font-bold mt-1">$6.50</p>
+</div>
+</div>
+<div class="shrink-0 flex flex-col items-end justify-between py-1">
+<div class="flex items-center gap-3 text-slate-900 dark:text-slate-100 bg-background-light dark:bg-slate-800 p-1 rounded-full">
+<button class="text-sm font-bold flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-slate-700 shadow-sm">-</button>
+<span class="text-sm font-bold w-4 text-center">1</span>
+<button class="text-sm font-bold flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-slate-700 shadow-sm">+</button>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-xl cursor-pointer">delete</span>
+</div>
+</div>
+<div class="flex gap-4 bg-white dark:bg-background-dark px-4 py-4 justify-between">
+<div class="flex items-start gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl size-[80px] shadow-sm" data-alt="Taro slush beverage with jelly" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCEIZjywc5TsOkrsLZ818v-S9bh9REgI5lvQ6i1nKEQrvMaK0WYCUIjGhJcUBxdXWPNOt5VU_5ivHQG1AluGx6UMHF6CIHt3yWxnYPFzweuh-joJO9ot-IIW9ytUNvkAS4Dq7hNulfje1pMIbLf9mpMkhbTiJKDRvFIpOlDewuit4mIvzevSr52PcH0-I6jfs7WDZ-h3PmrZB5B6gjKJuk-EgzrTh2lAt67cWwBbHQ1NKvclAwOTLylHzi_MqvDExTPmnh_nmJXoCY");'></div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-slate-900 dark:text-slate-100 text-base font-bold leading-normal">Taro Slush</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium leading-normal mt-0.5">+ Lychee Jelly</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal leading-normal italic">Medium, Standard Sweetness</p>
+<p class="text-primary text-sm font-bold mt-1">$14.00</p>
+</div>
+</div>
+<div class="shrink-0 flex flex-col items-end justify-between py-1">
+<div class="flex items-center gap-3 text-slate-900 dark:text-slate-100 bg-background-light dark:bg-slate-800 p-1 rounded-full">
+<button class="text-sm font-bold flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-slate-700 shadow-sm">-</button>
+<span class="text-sm font-bold w-4 text-center">2</span>
+<button class="text-sm font-bold flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-slate-700 shadow-sm">+</button>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-xl cursor-pointer">delete</span>
+</div>
+</div>
+</div>
+<div class="mt-4 px-4">
+<div class="bg-background-light dark:bg-slate-900/50 rounded-xl p-4 flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="text-slate-500 dark:text-slate-400 text-sm">Table Number</span>
+<span class="text-slate-900 dark:text-slate-100 font-bold">B-04</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-500 dark:text-slate-400 text-sm">Staff ID</span>
+<span class="text-slate-900 dark:text-slate-100 font-medium">#8821</span>
+</div>
+</div>
+</div>
+<div class="mt-auto bg-white dark:bg-background-dark border-t border-slate-100 dark:border-slate-800 p-6 space-y-4">
+<div class="space-y-2">
+<div class="flex justify-between text-sm">
+<span class="text-slate-500 dark:text-slate-400">Subtotal</span>
+<span class="text-slate-900 dark:text-slate-100 font-medium">$20.50</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-slate-500 dark:text-slate-400">Tax (8%)</span>
+<span class="text-slate-900 dark:text-slate-100 font-medium">$1.64</span>
+</div>
+<div class="flex justify-between items-center pt-2 border-t border-slate-50 dark:border-slate-800">
+<span class="text-slate-900 dark:text-slate-100 font-bold text-lg">Total</span>
+<span class="text-primary font-bold text-2xl tracking-tight">$22.14</span>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<button class="w-full bg-primary hover:opacity-90 text-slate-900 font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">point_of_sale</span>
+                    Submit to POS
+                </button>
+<button class="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold py-3 rounded-xl transition-all">
+                    Add More Items
+                </button>
+</div>
+</div>
+<div class="h-8 bg-white dark:bg-background-dark"></div>
+</div>
+</body></html>

@@ -31,44 +31,44 @@ interface TypographyProps extends TextProps {
 const getVariantStyles = (variant: TypographyVariant): string => {
 	switch (variant) {
 		case "h1":
-			return "text-3xl font-bold";
+			return "text-3xl font-bold tracking-tight leading-tight";
 		case "h2":
-			return "text-2xl font-bold";
+			return "text-2xl font-bold tracking-tight leading-tight";
 		case "h3":
-			return "text-xl font-semibold";
+			return "text-xl font-bold tracking-tight leading-tight";
 		case "h4":
-			return "text-lg font-semibold";
+			return "text-lg font-bold tracking-tight leading-tight";
 		case "body":
-			return "text-base";
+			return "text-base leading-normal";
 		case "body-sm":
-			return "text-sm";
+			return "text-sm leading-normal";
 		case "caption":
-			return "text-xs";
+			return "text-xs leading-normal";
 		case "label":
-			return "text-sm font-medium";
+			return "text-sm font-medium leading-normal tracking-wide";
 		default:
-			return "text-base";
+			return "text-base leading-normal";
 	}
 };
 
 const getColorStyles = (color: TypographyColor): string => {
 	switch (color) {
 		case "default":
-			return "text-secondary-900";
+			return "text-slate-900 dark:text-slate-100";
 		case "muted":
-			return "text-secondary-500";
+			return "text-slate-500 dark:text-slate-400";
 		case "primary":
-			return "text-primary-600";
+			return "text-[#2beead]";
 		case "success":
-			return "text-success-600";
+			return "text-green-600 dark:text-green-400";
 		case "warning":
-			return "text-warning-600";
+			return "text-yellow-600 dark:text-yellow-400";
 		case "error":
-			return "text-error-600";
+			return "text-red-500 dark:text-red-400";
 		case "white":
 			return "text-white";
 		default:
-			return "text-secondary-900";
+			return "text-slate-900 dark:text-slate-100";
 	}
 };
 
