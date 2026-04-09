@@ -12,6 +12,10 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./SOA-UI
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -23,7 +27,7 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: cd ./SOA-UI && npm ci
+        run: npm ci
 
       - name: Build project
-        run: cd ./SOA-UI && npm run build
+        run: npm run build
