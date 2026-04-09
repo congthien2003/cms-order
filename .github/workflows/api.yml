@@ -1,33 +1,34 @@
 name: .NET CI/CD Build
 
 on:
-    push:
-        branches: ["main"]
-    pull_request:
-        branches: ["main"]
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 env:
-    PROJECT_NAME: "Host"
-    DOTNET_VERSION: "10.0.x"
+  PROJECT_NAME: "Host"
+  DOTNET_VERSION: "10.0.x"
+  PROJECT_PATH: "./SOA-API/src/StoreOrderApp.sln"
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-            - name: Setup .NET SDK
-              uses: actions/setup-dotnet@v4
-              with:
-                  dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
-            - name: Restore dependencies
-              run: dotnet restore
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.PROJECT_PATH }}
 
-            - name: Build project
-              run: dotnet build $PROJECT_NAME/$PROJECT_NAME.csproj -c Release --no-restore
+      - name: Build project
+        run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
 
-            - name: Run tests
-              run: dotnet test --no-build
+      - name: Run tests
+        run: dotnet test ${{ env.PROJECT_PATH }} --no-build
