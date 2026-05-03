@@ -2,12 +2,16 @@ import api from '@/lib/axios';
 import type { ApiResponse } from '@/models/common/api';
 import type { ShopSettings, UpdateShopSettingsRequest } from '@/models/pos';
 
-const BASE_URL = '/Settings';
+const BASE_URL = '/v1/settings';
+
+const routes = {
+  base: BASE_URL,
+};
 
 export const settingsService = {
   // Get shop settings
   get: async (): Promise<ApiResponse<ShopSettings>> => {
-    const response = await api.get(BASE_URL);
+    const response = await api.get(routes.base);
     return response.data;
   },
 
@@ -15,7 +19,7 @@ export const settingsService = {
   update: async (
     data: UpdateShopSettingsRequest
   ): Promise<ApiResponse<ShopSettings>> => {
-    const response = await api.put(BASE_URL, data);
+    const response = await api.put(routes.base, data);
     return response.data;
   },
 };

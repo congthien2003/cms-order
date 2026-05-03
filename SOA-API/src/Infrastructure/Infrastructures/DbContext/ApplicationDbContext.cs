@@ -140,6 +140,11 @@ namespace Infrastructures
         /// </summary>
         public DbSet<ShopSetting> ShopSettings { get; set; }
 
+        /// <summary>
+        /// Gets or sets the ErrorLogs database set.
+        /// </summary>
+        public DbSet<ErrorLog> ErrorLogs { get; set; }
+
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

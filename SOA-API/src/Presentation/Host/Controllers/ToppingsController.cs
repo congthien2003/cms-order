@@ -8,7 +8,7 @@ using Application.Features.Toppings.Queries;
 namespace Host.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{v:apiVersion}/toppings")]
 public class ToppingsController : ControllerBase
 {
     private readonly IMediator _mediator;

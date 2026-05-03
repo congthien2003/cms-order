@@ -11,6 +11,7 @@ import {
   FolderTree,
   Cherry,
   Ticket,
+  ShieldAlert,
   type LucideProps,
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -23,7 +24,10 @@ import { useAuth } from '@/providers/authProvider/useAuth';
 
 export function Sidebar() {
   const { isOpen, toggle } = useSidebar();
-  const pathname = useLocation();
+  const location = useLocation();
+  const pathname = location.pathname;
+  const isSuperAdmin =
+    new URLSearchParams(location.search).get('isSuperAdmin') === 'true';
   const navigate = useNavigate();
   const { logout } = useAuth();
   const currentRoles = new TokenService().getCurrentRoles();
@@ -31,12 +35,14 @@ export function Sidebar() {
   const [filteredNavItems, setFilteredNavItems] = useState<NavItem[]>([]);
   useEffect(() => {
     setFilteredNavItems(
-      navItems.filter((item) =>
-        item.roles?.some((role) => currentRoles.includes(role))
-      )
+      navItems.filter((item) => {
+        const hasRole = item.roles?.some((role) => currentRoles.includes(role));
+        const allowBySuperAdminFlag = !item.superAdminOnly || isSuperAdmin;
+        return hasRole && allowBySuperAdminFlag;
+      })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentRoles, isSuperAdmin]);
 
   const handleLogout = () => {
     logout();
@@ -84,7 +90,7 @@ export function Sidebar() {
                   to={item.href}
                   className={cn(
                     'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground',
-                    pathname.pathname === item.href
+                    pathname === item.href
                       ? 'bg-accent text-accent-foreground'
                       : 'text-muted-foreground'
                   )}
@@ -101,7 +107,7 @@ export function Sidebar() {
                 to="/settings"
                 className={cn(
                   'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground',
-                  pathname.pathname === '/settings'
+                  pathname === '/settings'
                     ? 'bg-accent text-accent-foreground'
                     : 'text-muted-foreground'
                 )}
@@ -113,7 +119,7 @@ export function Sidebar() {
                 to="/help"
                 className={cn(
                   'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground',
-                  pathname.pathname === '/help'
+                  pathname === '/help'
                     ? 'bg-accent text-accent-foreground'
                     : 'text-muted-foreground'
                 )}
@@ -143,6 +149,7 @@ type NavItem = {
     Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
   >;
   roles?: string[];
+  superAdminOnly?: boolean;
 };
 
 const navItems: NavItem[] = [
@@ -181,5 +188,12 @@ const navItems: NavItem[] = [
     href: '/vouchers',
     icon: Ticket,
     roles: [RoleKeys.Admin],
+  },
+  {
+    name: 'Error Logs',
+    href: '/error-logs',
+    icon: ShieldAlert,
+    roles: [RoleKeys.Admin],
+    superAdminOnly: true,
   },
 ];

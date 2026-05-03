@@ -8,10 +8,24 @@ import type { RefreshTokenResponse } from '@/models/auth/response/refreshTokenRe
 import type { ApiResponse } from '@/models/common/api';
 import type { User } from '@/models/user/entity/user';
 
+const BASE_URL = '/v1/authentication';
+
+const routes = {
+  login: `${BASE_URL}/login`,
+  register: `${BASE_URL}/register`,
+  logout: `${BASE_URL}/logout`,
+  profile: '/v1/authentication/profile',
+  refresh: '/v1/authentication/refresh',
+  forgotPassword: '/v1/authentication/forgot-password',
+  resetPassword: '/v1/authentication/reset-password',
+  verifyEmail: '/v1/authentication/verify-email',
+  resendVerification: '/v1/authentication/resend-verification',
+};
+
 export const authService = {
   // User login
   login: async (credentials: LoginRequest): Promise<LoginResponse> => {
-    const response = await api.post('/v1/authentication/login', credentials);
+    const response = await api.post(routes.login, credentials);
     const { data } = response.data;
 
     return data;
@@ -21,14 +35,14 @@ export const authService = {
   register: async (
     userData: RegisterRequest
   ): Promise<ApiResponse<{ message: string }>> => {
-    const response = await api.post('/authentication/register', userData);
+    const response = await api.post(routes.register, userData);
     return response.data;
   },
 
   // User logout
   logout: async (): Promise<ApiResponse<void>> => {
     try {
-      const response = await api.post('/authentication/logout');
+      const response = await api.post(routes.logout);
       return response.data;
     } finally {
       // Always clear local storage
@@ -39,14 +53,14 @@ export const authService = {
 
   // Get user profile
   getProfile: async (): Promise<ApiResponse<User>> => {
-    const response = await api.get('/v1/authentication/profile');
+    const response = await api.get(routes.profile);
     return response.data;
   },
 
   // Refresh access token
   refreshToken: async (): Promise<RefreshTokenResponse> => {
     const refreshToken = localStorage.getItem('refreshToken');
-    const response = await api.post('/v1/authentication/refresh', {
+    const response = await api.post(routes.refresh, {
       refreshToken,
     });
     const { data } = response.data;
@@ -63,10 +77,7 @@ export const authService = {
   forgotPassword: async (
     emailData: ForgotPasswordRequest
   ): Promise<ApiResponse<{ message: string }>> => {
-    const response = await api.post(
-      '/v1/authentication/forgot-password',
-      emailData
-    );
+    const response = await api.post(routes.forgotPassword, emailData);
     return response.data;
   },
 
@@ -74,10 +85,7 @@ export const authService = {
   resetPassword: async (
     resetData: ResetPasswordRequest
   ): Promise<ApiResponse<{ message: string }>> => {
-    const response = await api.post(
-      '/v1/authentication/reset-password',
-      resetData
-    );
+    const response = await api.post(routes.resetPassword, resetData);
     return response.data;
   },
 
@@ -85,7 +93,7 @@ export const authService = {
   verifyEmail: async (
     token: string
   ): Promise<ApiResponse<{ message: string }>> => {
-    const response = await api.post('/v1/authentication/verify-email', {
+    const response = await api.post(routes.verifyEmail, {
       token,
     });
     return response.data;
@@ -95,7 +103,7 @@ export const authService = {
   resendVerification: async (
     email: string
   ): Promise<ApiResponse<{ message: string }>> => {
-    const response = await api.post('/v1/authentication/resend-verification', {
+    const response = await api.post(routes.resendVerification, {
       email,
     });
     return response.data;

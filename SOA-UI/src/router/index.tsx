@@ -12,6 +12,7 @@ import {
   OrdersPage,
   OrderDetailPage,
   SettingsPage,
+  ErrorLogsPage,
 } from '@/pages/pos';
 
 const router = createBrowserRouter([
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
       { path: 'toppings', element: <ToppingsPage /> },
       { path: 'vouchers', element: <VouchersPage /> },
       { path: 'settings', element: <SettingsPage /> },
+      { path: 'error-logs', element: <ErrorLogsPage /> },
     ],
   },
 ]);

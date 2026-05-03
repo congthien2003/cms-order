@@ -1,16 +1,22 @@
 ﻿using Application.Exceptions;
+using Application.Features.Common.Notifications;
+using Application.Models.Common;
 using Domain.ErrorModel;
+using MediatR;
 using Microsoft.AspNetCore.Diagnostics;
+using System.Security.Claims;
 
 namespace Host.Extensions
 {
     public class GlobalExceptionHandler : IExceptionHandler
     {
         private readonly ILogger<GlobalExceptionHandler> _logger;
+        private readonly IPublisher _publisher;
 
-        public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
+        public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger, IPublisher publisher)
         {
             _logger = logger;
+            _publisher = publisher;
         }
 
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext,
@@ -25,7 +31,25 @@ namespace Host.Extensions
 
                 httpContext.Response.StatusCode = statusCode;
 
-                _logger.LogError($"Exception occurred: {exception.Message} | Type: {exception.GetType().Name} | StackTrace: {exception.StackTrace}");
+                _logger.LogError(exception,
+                    "Unhandled exception at {Method} {Path}. TraceId: {TraceId}. StatusCode: {StatusCode}",
+                    httpContext.Request.Method,
+                    httpContext.Request.Path,
+                    httpContext.TraceIdentifier,
+                    statusCode);
+
+                var logContext = new ErrorLogContext
+                {
+                    TraceId = httpContext.TraceIdentifier,
+                    RequestMethod = httpContext.Request.Method,
+                    RequestPath = httpContext.Request.Path.Value,
+                    QueryString = httpContext.Request.QueryString.Value,
+                    UserId = httpContext.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value,
+                    UserName = httpContext.User?.FindFirst(ClaimTypes.Name)?.Value,
+                    Source = nameof(GlobalExceptionHandler)
+                };
+
+                await _publisher.Publish(new ErrorOccurredNotification(exception, logContext, statusCode, "Error"), cancellationToken);
 
                 await httpContext.Response.WriteAsync(new ErrorDetails()
                 {

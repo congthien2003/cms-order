@@ -9,50 +9,62 @@ import type {
   GetOrdersRequest,
 } from '@/models/pos';
 
-const BASE_URL = '/Orders';
+const BASE_URL = '/v1/orders';
+
+const routes = {
+  list: BASE_URL,
+  today: `${BASE_URL}/today`,
+  queue: `${BASE_URL}/queue`,
+  byId: (id: string) => `${BASE_URL}/${id}`,
+  byNumber: (orderNumber: string) => `${BASE_URL}/number/${orderNumber}`,
+  receipt: (id: string) => `${BASE_URL}/${id}/receipt`,
+  status: (id: string) => `${BASE_URL}/${id}/status`,
+  paymentStatus: (id: string) => `${BASE_URL}/${id}/payment-status`,
+  cancel: (id: string) => `${BASE_URL}/${id}/cancel`,
+};
 
 export const orderService = {
   // Get orders list with pagination
   getList: async (
     params?: GetOrdersRequest
   ): Promise<ApiResponse<PagedList<Order>>> => {
-    const response = await api.get(BASE_URL, { params });
+    const response = await api.get(routes.list, { params });
     return response.data;
   },
 
   // Get today's orders
   getToday: async (): Promise<ApiResponse<Order[]>> => {
-    const response = await api.get(`${BASE_URL}/today`);
+    const response = await api.get(routes.today);
     return response.data;
   },
 
   // Get order queue (pending/preparing orders)
   getQueue: async (): Promise<ApiResponse<Order[]>> => {
-    const response = await api.get(`${BASE_URL}/queue`);
+    const response = await api.get(routes.queue);
     return response.data;
   },
 
   // Get order by ID
   getById: async (id: string): Promise<ApiResponse<Order>> => {
-    const response = await api.get(`${BASE_URL}/${id}`);
+    const response = await api.get(routes.byId(id));
     return response.data;
   },
 
   // Get order by order number
   getByNumber: async (orderNumber: string): Promise<ApiResponse<Order>> => {
-    const response = await api.get(`${BASE_URL}/number/${orderNumber}`);
+    const response = await api.get(routes.byNumber(orderNumber));
     return response.data;
   },
 
   // Get order receipt
   getReceipt: async (id: string): Promise<ApiResponse<OrderReceipt>> => {
-    const response = await api.get(`${BASE_URL}/${id}/receipt`);
+    const response = await api.get(routes.receipt(id));
     return response.data;
   },
 
   // Create new order
   create: async (data: CreateOrderRequest): Promise<ApiResponse<Order>> => {
-    const response = await api.post(BASE_URL, data);
+    const response = await api.post(routes.list, data);
     return response.data;
   },
 
@@ -61,7 +73,7 @@ export const orderService = {
     id: string,
     data: UpdateOrderStatusRequest
   ): Promise<ApiResponse<Order>> => {
-    const response = await api.patch(`${BASE_URL}/${id}/status`, data);
+    const response = await api.patch(routes.status(id), data);
     return response.data;
   },
 
@@ -70,13 +82,13 @@ export const orderService = {
     id: string,
     data: UpdatePaymentStatusRequest
   ): Promise<ApiResponse<Order>> => {
-    const response = await api.patch(`${BASE_URL}/${id}/payment-status`, data);
+    const response = await api.patch(routes.paymentStatus(id), data);
     return response.data;
   },
 
   // Cancel order
   cancel: async (id: string, reason?: string): Promise<ApiResponse<Order>> => {
-    const response = await api.post(`${BASE_URL}/${id}/cancel`, { reason });
+    const response = await api.post(routes.cancel(id), { reason });
     return response.data;
   },
 };

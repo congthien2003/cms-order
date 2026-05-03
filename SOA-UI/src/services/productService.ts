@@ -10,6 +10,19 @@ import type {
 
 const BASE_URL = '/v1/products';
 
+const routes = {
+  list: `${BASE_URL}/list`,
+  byCategory: (categoryId: string) => `${BASE_URL}/by-category/${categoryId}`,
+  byId: (id: string) => `${BASE_URL}/${id}`,
+  toggleStatus: (id: string) => `${BASE_URL}/${id}/toggle-status`,
+  sizes: (productId: string) => `${BASE_URL}/${productId}/sizes`,
+  sizeById: (productId: string, sizeId: string) =>
+    `${BASE_URL}/${productId}/sizes/${sizeId}`,
+  toppings: (productId: string) => `${BASE_URL}/${productId}/toppings`,
+  toppingById: (productId: string, toppingId: string) =>
+    `${BASE_URL}/${productId}/toppings/${toppingId}`,
+};
+
 export const productService = {
   // Get products list with pagination
   getList: async (params?: {
@@ -19,7 +32,7 @@ export const productService = {
     categoryId?: string;
     isActive?: boolean;
   }): Promise<ApiResponse<PagedList<Product>>> => {
-    const response = await api.post(`${BASE_URL}/list`, params || {});
+    const response = await api.post(routes.list, params || {});
     return response.data;
   },
 
@@ -27,13 +40,13 @@ export const productService = {
   getByCategory: async (
     categoryId: string
   ): Promise<ApiResponse<Product[]>> => {
-    const response = await api.get(`${BASE_URL}/by-category/${categoryId}`);
+    const response = await api.get(routes.byCategory(categoryId));
     return response.data;
   },
 
   // Get product by ID
   getById: async (id: string): Promise<ApiResponse<Product>> => {
-    const response = await api.get(`${BASE_URL}/${id}`);
+    const response = await api.get(routes.byId(id));
     return response.data;
   },
 
@@ -48,19 +61,19 @@ export const productService = {
     id: string,
     data: UpdateProductRequest
   ): Promise<ApiResponse<Product>> => {
-    const response = await api.put(`${BASE_URL}/${id}`, data);
+    const response = await api.put(routes.byId(id), data);
     return response.data;
   },
 
   // Delete product
   delete: async (id: string): Promise<ApiResponse<void>> => {
-    const response = await api.delete(`${BASE_URL}/${id}`);
+    const response = await api.delete(routes.byId(id));
     return response.data;
   },
 
   // Toggle product status
   toggleStatus: async (id: string): Promise<ApiResponse<Product>> => {
-    const response = await api.patch(`${BASE_URL}/${id}/toggle-status`);
+    const response = await api.patch(routes.toggleStatus(id));
     return response.data;
   },
 
@@ -75,7 +88,7 @@ export const productService = {
       isDefault?: boolean;
     }
   ): Promise<ApiResponse<ProductSize>> => {
-    const response = await api.post(`${BASE_URL}/${productId}/sizes`, data);
+    const response = await api.post(routes.sizes(productId), data);
     return response.data;
   },
 
@@ -90,10 +103,7 @@ export const productService = {
       isActive?: boolean;
     }
   ): Promise<ApiResponse<ProductSize>> => {
-    const response = await api.put(
-      `${BASE_URL}/${productId}/sizes/${sizeId}`,
-      data
-    );
+    const response = await api.put(routes.sizeById(productId, sizeId), data);
     return response.data;
   },
 
@@ -102,9 +112,7 @@ export const productService = {
     productId: string,
     sizeId: string
   ): Promise<ApiResponse<void>> => {
-    const response = await api.delete(
-      `${BASE_URL}/${productId}/sizes/${sizeId}`
-    );
+    const response = await api.delete(routes.sizeById(productId, sizeId));
     return response.data;
   },
 
@@ -114,7 +122,7 @@ export const productService = {
   getToppings: async (
     productId: string
   ): Promise<ApiResponse<ProductTopping[]>> => {
-    const response = await api.get(`${BASE_URL}/${productId}/toppings`);
+    const response = await api.get(routes.toppings(productId));
     return response.data;
   },
 
@@ -126,7 +134,7 @@ export const productService = {
       isDefault?: boolean;
     }
   ): Promise<ApiResponse<ProductTopping>> => {
-    const response = await api.post(`${BASE_URL}/${productId}/toppings`, data);
+    const response = await api.post(routes.toppings(productId), data);
     return response.data;
   },
 
@@ -135,9 +143,7 @@ export const productService = {
     productId: string,
     toppingId: string
   ): Promise<ApiResponse<void>> => {
-    const response = await api.delete(
-      `${BASE_URL}/${productId}/toppings/${toppingId}`
-    );
+    const response = await api.delete(routes.toppingById(productId, toppingId));
     return response.data;
   },
 
@@ -148,7 +154,7 @@ export const productService = {
       toppingIds: string[];
     }
   ): Promise<ApiResponse<ProductTopping[]>> => {
-    const response = await api.put(`${BASE_URL}/${productId}/toppings`, data);
+    const response = await api.put(routes.toppings(productId), data);
     return response.data;
   },
 };

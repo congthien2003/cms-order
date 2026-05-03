@@ -11,7 +11,7 @@ namespace Host.Controllers;
 /// Controller for Shop Settings
 /// </summary>
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{v:apiVersion}/settings")]
 [Authorize]
 public class SettingsController : ControllerBase
 {

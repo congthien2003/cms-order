@@ -7,3 +7,4 @@ export { VouchersPage } from './vouchers';
 export { OrdersPage } from './orders';
 export { default as OrderDetailPage } from './orders/id/OrderDetailPage';
 export { SettingsPage } from './settings';
+export { default as ErrorLogsPage } from './error-logs/ErrorLogsPage';

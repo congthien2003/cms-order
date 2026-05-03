@@ -11,7 +11,7 @@ namespace Host.Controllers
     /// Shop Settings management endpoints
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{v:apiVersion}/shop-settings")]
     public class ShopSettingsController : ControllerBase
     {
         private readonly IMediator _mediator;

@@ -9,7 +9,7 @@ namespace Host.Controllers;
 /// Controller for Dashboard & Statistics
 /// </summary>
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{v:apiVersion}/dashboard")]
 [Authorize]
 public class DashboardController : ControllerBase
 {

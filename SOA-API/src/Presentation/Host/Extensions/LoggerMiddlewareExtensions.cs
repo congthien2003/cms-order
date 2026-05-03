@@ -1,7 +1,7 @@
-﻿
+﻿using System.Diagnostics;
+
 namespace Host.Extensions
 {
-    // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
     public class LoggerMiddlewareExtensions
     {
         private readonly RequestDelegate _next;
@@ -13,14 +13,31 @@ namespace Host.Extensions
             _logger = logger;
         }
 
-        public Task Invoke(HttpContext httpContext)
+        public async Task Invoke(HttpContext httpContext)
         {
-            _logger.LogInformation($"{httpContext.Request.Method} {httpContext.Request.Path} from {httpContext.Connection.RemoteIpAddress}");
-            return _next(httpContext);
+            var stopwatch = Stopwatch.StartNew();
+            var traceId = httpContext.TraceIdentifier;
+            var method = httpContext.Request.Method;
+            var path = httpContext.Request.Path.Value;
+
+            try
+            {
+                await _next(httpContext);
+            }
+            finally
+            {
+                stopwatch.Stop();
+                _logger.LogInformation(
+                    "HTTP {Method} {Path} responded {StatusCode} in {DurationMs}ms. TraceId: {TraceId}",
+                    method,
+                    path,
+                    httpContext.Response.StatusCode,
+                    stopwatch.ElapsedMilliseconds,
+                    traceId);
+            }
         }
     }
 
-    // Extension method used to add the middleware to the HTTP request pipeline.
     public static class LoggerMiddlewareExtensionsExtensions
     {
         public static IApplicationBuilder UseLoggerMiddlewareExtensions(this IApplicationBuilder builder)

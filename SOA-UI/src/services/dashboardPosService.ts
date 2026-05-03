@@ -8,7 +8,15 @@ import type {
   CategoryRevenue,
 } from '@/models/pos';
 
-const BASE_URL = '/Dashboard';
+const BASE_URL = '/v1/dashboard';
+
+const routes = {
+  summary: `${BASE_URL}/summary`,
+  revenue: `${BASE_URL}/revenue`,
+  ordersByStatus: `${BASE_URL}/orders-by-status`,
+  topProducts: `${BASE_URL}/top-products`,
+  revenueByCategory: `${BASE_URL}/revenue-by-category`,
+};
 
 export interface GetRevenueStatisticsRequest {
   startDate?: string;
@@ -19,7 +27,7 @@ export interface GetRevenueStatisticsRequest {
 export const dashboardPosService = {
   // Get dashboard summary
   getSummary: async (): Promise<ApiResponse<DashboardSummary>> => {
-    const response = await api.get(`${BASE_URL}/summary`);
+    const response = await api.get(routes.summary);
     return response.data;
   },
 
@@ -33,16 +41,14 @@ export const dashboardPosService = {
     if (params?.groupBy) queryParams.append('groupBy', params.groupBy);
 
     const queryString = queryParams.toString();
-    const url = queryString
-      ? `${BASE_URL}/revenue?${queryString}`
-      : `${BASE_URL}/revenue`;
+    const url = queryString ? `${routes.revenue}?${queryString}` : routes.revenue;
     const response = await api.get(url);
     return response.data;
   },
 
   // Get orders grouped by status
   getOrdersByStatus: async (): Promise<ApiResponse<OrdersByStatus[]>> => {
-    const response = await api.get(`${BASE_URL}/orders-by-status`);
+    const response = await api.get(routes.ordersByStatus);
     return response.data;
   },
 
@@ -58,9 +64,7 @@ export const dashboardPosService = {
     if (params?.limit) queryParams.append('limit', params.limit.toString());
 
     const queryString = queryParams.toString();
-    const url = queryString
-      ? `${BASE_URL}/top-products?${queryString}`
-      : `${BASE_URL}/top-products`;
+    const url = queryString ? `${routes.topProducts}?${queryString}` : routes.topProducts;
     const response = await api.get(url);
     return response.data;
   },
@@ -76,8 +80,8 @@ export const dashboardPosService = {
 
     const queryString = queryParams.toString();
     const url = queryString
-      ? `${BASE_URL}/revenue-by-category?${queryString}`
-      : `${BASE_URL}/revenue-by-category`;
+      ? `${routes.revenueByCategory}?${queryString}`
+      : routes.revenueByCategory;
     const response = await api.get(url);
     return response.data;
   },

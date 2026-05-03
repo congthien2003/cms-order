@@ -57,11 +57,6 @@ apiClient.interceptors.response.use(
           window.location.href = '/403';
           break;
 
-        case 404:
-          // Not Found - redirect về trang 404
-          window.location.href = '/404';
-          break;
-
         case 500:
           // Internal Server Error - redirect về trang error
           window.location.href = '/error';

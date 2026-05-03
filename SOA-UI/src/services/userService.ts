@@ -1,22 +1,24 @@
+import { api } from '@/lib/api';
 import type { ApiResponse } from '@/models/common/api';
 import type { PaginationParams } from '@/models/common/api';
 import type { UserListResponse } from '@/models/user/response/userListResponse';
 import type { UserDetailResponse } from '@/models/user/response/userDetailResponse';
 import type { CreateUserRequest } from '@/models/user/request/createUserRequest';
 import type { UpdateUserRequest } from '@/models/user/request/updateUserRequest';
-import { api } from '@/lib/api';
+
+const BASE_URL = '/api/v1/users';
+
+const routes = {
+  list: `${BASE_URL}/list`,
+  byId: (id: string) => `${BASE_URL}/${id}`,
+  create: BASE_URL,
+  update: (id: string) => `${BASE_URL}/${id}`,
+  delete: (id: string) => `${BASE_URL}/${id}`,
+  activate: (id: string) => `${BASE_URL}/${id}/activate`,
+  deactivate: (id: string) => `${BASE_URL}/${id}/deactivate`,
+};
 
 class UserService {
-  apiRoute = {
-    GET_USERS: '/api/v1/users/list',
-    GET_USER_BY_ID: '/api/v1/users/:id',
-    CREATE_USER: '/api/v1/users',
-    UPDATE_USER: '/api/v1/users/:id',
-    DELETE_USER: '/api/v1/users/:id',
-    ACTIVATE_USER: '/api/v1/users/:id/activate',
-    DEACTIVATE_USER: '/api/v1/users/:id/deactivate',
-  };
-
   async getUsers(
     params?: PaginationParams
   ): Promise<ApiResponse<UserListResponse>> {
@@ -30,7 +32,7 @@ class UserService {
     if (params?.sortDescending !== undefined && params.sortDescending !== null)
       queryParams.append('sortDescending', params.sortDescending.toString());
 
-    const url = `${this.apiRoute.GET_USERS}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+    const url = `${routes.list}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
     const response = await api.post<ApiResponse<UserListResponse>>(url, {
       page: params?.page,
       pageSize: params?.pageSize,
@@ -42,9 +44,7 @@ class UserService {
   }
 
   async getUserById(id: string): Promise<ApiResponse<UserDetailResponse>> {
-    const response = await api.get<ApiResponse<UserDetailResponse>>(
-      this.apiRoute.GET_USER_BY_ID.replace(':id', id)
-    );
+    const response = await api.get<ApiResponse<UserDetailResponse>>(routes.byId(id));
     return response.data;
   }
 
@@ -52,7 +52,7 @@ class UserService {
     userData: CreateUserRequest
   ): Promise<ApiResponse<UserDetailResponse>> {
     const response = await api.post<ApiResponse<UserDetailResponse>>(
-      this.apiRoute.CREATE_USER,
+      routes.create,
       userData
     );
     return response.data;
@@ -63,30 +63,24 @@ class UserService {
     userData: UpdateUserRequest
   ): Promise<ApiResponse<UserDetailResponse>> {
     const response = await api.put<ApiResponse<UserDetailResponse>>(
-      this.apiRoute.UPDATE_USER.replace(':id', id),
+      routes.update(id),
       userData
     );
     return response.data;
   }
 
   async deleteUser(id: string): Promise<ApiResponse<void>> {
-    const response = await api.delete<ApiResponse<void>>(
-      this.apiRoute.DELETE_USER.replace(':id', id)
-    );
+    const response = await api.delete<ApiResponse<void>>(routes.delete(id));
     return response.data;
   }
 
   async activateUser(id: string): Promise<ApiResponse<boolean>> {
-    const response = await api.post<ApiResponse<boolean>>(
-      this.apiRoute.ACTIVATE_USER.replace(':id', id)
-    );
+    const response = await api.post<ApiResponse<boolean>>(routes.activate(id));
     return response.data;
   }
 
   async deactivateUser(id: string): Promise<ApiResponse<boolean>> {
-    const response = await api.post<ApiResponse<boolean>>(
-      this.apiRoute.DEACTIVATE_USER.replace(':id', id)
-    );
+    const response = await api.post<ApiResponse<boolean>>(routes.deactivate(id));
     return response.data;
   }
 }

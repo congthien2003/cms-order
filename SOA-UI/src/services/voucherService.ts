@@ -8,7 +8,14 @@ import type {
   ValidateVoucherResponse,
 } from '@/models/pos';
 
-const BASE_URL = '/Vouchers';
+const BASE_URL = '/v1/vouchers';
+
+const routes = {
+  list: BASE_URL,
+  byId: (id: string) => `${BASE_URL}/${id}`,
+  validate: `${BASE_URL}/validate`,
+  toggleStatus: (id: string) => `${BASE_URL}/${id}/toggle-status`,
+};
 
 export const voucherService = {
   // Get vouchers list with pagination
@@ -18,13 +25,13 @@ export const voucherService = {
     searchTerm?: string;
     isActive?: boolean;
   }): Promise<ApiResponse<PagedList<Voucher>>> => {
-    const response = await api.get(BASE_URL, { params });
+    const response = await api.get(routes.list, { params });
     return response.data;
   },
 
   // Get voucher by ID
   getById: async (id: string): Promise<ApiResponse<Voucher>> => {
-    const response = await api.get(`${BASE_URL}/${id}`);
+    const response = await api.get(routes.byId(id));
     return response.data;
   },
 
@@ -32,7 +39,7 @@ export const voucherService = {
   validate: async (
     data: ValidateVoucherRequest
   ): Promise<ApiResponse<ValidateVoucherResponse>> => {
-    const response = await api.post(`${BASE_URL}/validate`, data);
+    const response = await api.post(routes.validate, data);
     return response.data;
   },
 
@@ -47,19 +54,19 @@ export const voucherService = {
     id: string,
     data: UpdateVoucherRequest
   ): Promise<ApiResponse<Voucher>> => {
-    const response = await api.put(`${BASE_URL}/${id}`, data);
+    const response = await api.put(routes.byId(id), data);
     return response.data;
   },
 
   // Delete voucher
   delete: async (id: string): Promise<ApiResponse<void>> => {
-    const response = await api.delete(`${BASE_URL}/${id}`);
+    const response = await api.delete(routes.byId(id));
     return response.data;
   },
 
   // Toggle voucher status
   toggleStatus: async (id: string): Promise<ApiResponse<Voucher>> => {
-    const response = await api.patch(`${BASE_URL}/${id}/toggle-status`);
+    const response = await api.patch(routes.toggleStatus(id));
     return response.data;
   },
 };

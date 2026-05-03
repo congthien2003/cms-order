@@ -164,7 +164,7 @@ public class ProductsController : BaseController
     {
         var command = new AddProductSizeCommand(productId, request);
         var result = await Mediator.Send(command, cancellationToken);
-        return Created($"/api/v1/products/{productId}/sizes/{result.Data?.Id}", result);
+        return Created($"/v1/products/{productId}/sizes/{result.Data?.Id}", result);
     }
 
     /// <summary>
@@ -240,7 +240,7 @@ public class ProductsController : BaseController
     {
         var command = new AddProductToppingCommand(productId, request);
         var result = await Mediator.Send(command, cancellationToken);
-        return Created($"/api/v1/products/{productId}/toppings/{result.Data?.ToppingId}", result);
+        return Created($"/v1/products/{productId}/toppings/{result.Data?.ToppingId}", result);
     }
 
     /// <summary>

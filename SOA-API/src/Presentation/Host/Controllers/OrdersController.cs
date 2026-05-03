@@ -11,7 +11,7 @@ namespace Host.Controllers;
 /// Controller for Order Management
 /// </summary>
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{v:apiVersion}/orders")]
 [Authorize]
 public class OrdersController : ControllerBase
 {

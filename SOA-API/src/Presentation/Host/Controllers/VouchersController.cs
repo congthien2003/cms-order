@@ -8,7 +8,7 @@ using Application.Features.Vouchers.Queries;
 namespace Host.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{v:apiVersion}/vouchers")]
 public class VouchersController : ControllerBase
 {
     private readonly IMediator _mediator;

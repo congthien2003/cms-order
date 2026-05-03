@@ -1,11 +1,13 @@
 ﻿using Application.Services.Interfaces.Authentication;
 using Application.Services.Interfaces.Infrastructure.Cache;
 using Application.Services.Interfaces.Infrastructure.Cloud;
+using Application.Services.Interfaces;
 using Application.Services.Interfaces.Infrastructure.ImageOpimization;
 using Application.Services.Interfaces.Infrastructure.Notifications;
 using Domain.Repositories;
 using Infrastructures.Authentication;
 using Infrastructures.Repositories;
+using Infrastructures.Services;
 using Infrastructures.Services.Cache.MemoryCache;
 using Infrastructures.Services.ImageOptimization;
 using Integrations.AzureBlob;
@@ -34,6 +36,7 @@ namespace Infrastructures
 
             services.AddScoped<IJwtManager, JwtManager>();
             services.AddScoped<IRepositoryManager, RepositoryManager>();
+            services.AddScoped<IErrorLogService, ErrorLogService>();
 
             return services;
         }

@@ -7,18 +7,20 @@ import type { UpdateRoleRequest } from '@/models/role/request/updateRoleRequest'
 import type { RoleResponse } from '@/models/role/response/roleResponse';
 import type { RolesListResponse } from '@/models/role/response/rolesListResponse';
 
-class RoleService {
-  apiRoute = {
-    GET_ROLES: '/api/v1/roles/list',
-    GET_ROLE_BY_ID: '/api/v1/roles/:id',
-    CREATE_ROLE: '/api/v1/roles',
-    UPDATE_ROLE: '/api/v1/roles/:id',
-    DELETE_ROLE: '/api/v1/roles/:id',
-    GET_PERMISSIONS: '/api/v1/roles/permissions',
-    ASSIGN_ROLE: '/api/v1/roles/:roleId/assign',
-    REMOVE_ROLE: '/api/v1/roles/:roleId/remove/:userId',
-  };
+const BASE_URL = '/api/v1/roles';
 
+const routes = {
+  list: `${BASE_URL}/list`,
+  byId: (id: string) => `${BASE_URL}/${id}`,
+  create: BASE_URL,
+  update: (id: string) => `${BASE_URL}/${id}`,
+  delete: (id: string) => `${BASE_URL}/${id}`,
+  permissions: `${BASE_URL}/permissions`,
+  assign: (roleId: string) => `${BASE_URL}/${roleId}/assign`,
+  remove: (roleId: string, userId: string) => `${BASE_URL}/${roleId}/remove/${userId}`,
+};
+
+class RoleService {
   async getRoles(
     params?: PaginationParams
   ): Promise<ApiResponse<RolesListResponse>> {
@@ -31,7 +33,7 @@ class RoleService {
     if (params?.sortBy) queryParams.append('sortBy', params.sortBy);
     if (params?.sortOrder) queryParams.append('sortOrder', params.sortOrder);
 
-    const url = `${this.apiRoute.GET_ROLES}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+    const url = `${routes.list}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
     const response = await api.post<ApiResponse<RolesListResponse>>(url, {
       page: params?.page,
       pageSize: params?.pageSize,
@@ -43,9 +45,7 @@ class RoleService {
   }
 
   async getRoleById(id: string): Promise<ApiResponse<Role>> {
-    const response = await api.get<ApiResponse<Role>>(
-      this.apiRoute.GET_ROLE_BY_ID.replace(':id', id)
-    );
+    const response = await api.get<ApiResponse<Role>>(routes.byId(id));
     return response.data;
   }
 
@@ -53,7 +53,7 @@ class RoleService {
     roleData: CreateRoleRequest
   ): Promise<ApiResponse<RoleResponse>> {
     const response = await api.post<ApiResponse<RoleResponse>>(
-      this.apiRoute.CREATE_ROLE,
+      routes.create,
       roleData
     );
     return response.data;
@@ -63,24 +63,17 @@ class RoleService {
     id: string,
     roleData: UpdateRoleRequest
   ): Promise<ApiResponse<RoleResponse>> {
-    const response = await api.put<ApiResponse<RoleResponse>>(
-      this.apiRoute.UPDATE_ROLE.replace(':id', id),
-      roleData
-    );
+    const response = await api.put<ApiResponse<RoleResponse>>(routes.update(id), roleData);
     return response.data;
   }
 
   async deleteRole(id: string): Promise<ApiResponse<void>> {
-    const response = await api.delete<ApiResponse<void>>(
-      this.apiRoute.DELETE_ROLE.replace(':id', id)
-    );
+    const response = await api.delete<ApiResponse<void>>(routes.delete(id));
     return response.data;
   }
 
   async getPermissions(): Promise<ApiResponse<{ permissions: string[] }>> {
-    const response = await api.get<ApiResponse<{ permissions: string[] }>>(
-      this.apiRoute.GET_PERMISSIONS
-    );
+    const response = await api.get<ApiResponse<{ permissions: string[] }>>(routes.permissions);
     return response.data;
   }
 
@@ -88,10 +81,9 @@ class RoleService {
     userId: string,
     roleId: string
   ): Promise<ApiResponse<{ message: string }>> {
-    const response = await api.post<ApiResponse<{ message: string }>>(
-      this.apiRoute.ASSIGN_ROLE.replace(':roleId', roleId),
-      { userId }
-    );
+    const response = await api.post<ApiResponse<{ message: string }>>(routes.assign(roleId), {
+      userId,
+    });
     return response.data;
   }
 
@@ -99,11 +91,7 @@ class RoleService {
     userId: string,
     roleId: string
   ): Promise<ApiResponse<{ message: string }>> {
-    const url = this.apiRoute.REMOVE_ROLE.replace(':roleId', roleId).replace(
-      ':userId',
-      userId
-    );
-    const response = await api.delete<ApiResponse<{ message: string }>>(url);
+    const response = await api.delete<ApiResponse<{ message: string }>>(routes.remove(roleId, userId));
     return response.data;
   }
 }
